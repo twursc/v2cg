@@ -1,0 +1,44 @@
+{
+  "log" : {
+    "access": "/var/log/v2ray/access.log",
+    "error": "/var/log/v2ray/error.log",
+    "loglevel": "warning"
+  },
+  "inbound": {
+    "port": 32478,
+    "protocol": "vmess",
+    "settings": {
+      "clients": [
+        {
+          "id": "2aeb24e5-7733-4f99-97de-8040f8d58cbd",
+          "level": 1,
+          "alterId": 64
+        }
+      ]
+    }
+  },
+  "outbound": {
+    "protocol": "freedom",
+    "settings": {}
+  },
+  "outboundDetour": [
+    {
+      "protocol": "blackhole",
+      "settings": {},
+      "tag": "blocked"
+    }
+  ],
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "rules": [
+        {
+          "type": "field",
+          "ip": ["geoip:private"],
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+  }
+}
+
