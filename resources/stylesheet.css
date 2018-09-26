@@ -23,3 +23,13 @@
 #inbounds .list-inline li#inbounds-list .inbound-obj { cursor: pointer; }
 #inbounds .list-inline li#inbounds-list .inbound-icon { width: 32px; }
 #inbounds .list-inline li#inbounds-list .inbound-operation { text-align: right; }
+
+
+/* Theme Dark */
+html.theme-dark body {
+    background-color: #212121;
+}
+
+html.theme-dark * {
+    color: #eee;
+}
