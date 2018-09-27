@@ -1,28 +1,29 @@
 /* Bootstrap Stylesheet Override */
     .table td { border-top: none !important; }
 .panedesc { font-size: 0.95em; margin-bottom: 24px;}
+.panel-heading { padding: 8px 16px; font-weight: bold; }
 
-#inbounds .list-inline { padding: 0 8px; }
-#inbounds .list-inline li { padding: 0; min-height: 540px; }
+#inbounds .row { margin: 0 !important; padding: 0 8px; }
+#inbounds .row div#inbounds-list { padding: 0; min-height: 540px; }
 
-#inbounds .list-inline li#inbounds-list {
+#inbounds .row div#inbounds-list {
     width: 240px;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 16px;
 }
 
-.list-inline .inlist-button {
+#inbounds .row .inlist-button {
     float: left;
     width: calc(100% - 48px);
     margin: 8px 24px;
     transition: 0.25s;
 }
 
-#inbounds .list-inline li#inbounds-list .inbound-obj:first-child .opr-setprimary { display: none; }
-#inbounds .list-inline li#inbounds-list .inbound-obj { cursor: pointer; }
-#inbounds .list-inline li#inbounds-list .inbound-icon { width: 32px; }
-#inbounds .list-inline li#inbounds-list .inbound-operation { text-align: right; }
+#inbounds .row div#inbounds-list .inbound-obj:first-child .opr-setprimary { display: none; }
+#inbounds .row div#inbounds-list .inbound-obj { cursor: pointer; }
+#inbounds .row div#inbounds-list .inbound-icon { width: 32px; }
+#inbounds .row div#inbounds-list .inbound-operation { text-align: right; }
 
 
 /* Theme Dark */
