@@ -74,7 +74,7 @@
                                     <div class="form-group">
                                         <label for="protocol" class="col-sm-2 control-label">Protocol</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" id="protocol" onchange="_showproto('inbound', this.value, [])">
+                                            <select class="form-control" id="protocol" onchange="_showproto('inbound', this.value, $('input#inboundTag').val())">
                                                 <option value="">-- Select a protocol --</option>
                                                 <option value="shadowsocks">Shadowsocks</option>
                                                 <option value="socks5">Socks5</option>
@@ -123,7 +123,7 @@
                 <h3>JSON Content</h3>
                 <p class="panedesc">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
                 <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%;" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
-                <br><button class="btn btn-primary" onclick="parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
+                <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
             </div>
         </div>
     </div>
@@ -184,27 +184,45 @@
         $('ul.nav-tabs a.tabs-click:first').click();
     };
 
-    function _parseJson(content) {
-        if(content.length == 0) {
-            content = "{}";
+    function _parseJson(jsoncontent) {
+        if(jsoncontent.length == 0) {
+            jsoncontent = "{}";
         }
         try {
-            content = JSON.parse(content);
+            content = JSON.parse(jsoncontent);
             console.log(content);
         } catch (e) {
             alert(e);
             console.error(e);
         }
+        if(typeof content["inboundDetour"] == "undefined") {
+            content["inboundDetour"] = [content["inbound"]];
+        } else {
+            content["inboundDetour"].push(content["inbound"]);
+        }
+        if(typeof content["outboundDetour"] == "undefined") {
+            content["outboundDetour"] = [content["outbound"]];
+        } else {
+            content["outboundDetour"].push(content["outbound"]);
+        }
         console.log("Inbound", content.inbound);
     }
 
-    function _showproto(page, protoname, protodetails) {
-        console.log(page, protoname, protodetails);
+    function _showproto(page, protoname, tagname) {
+
         var container = $('div#' + page + '-config div.panel-body.protodetails');
         if(protoname.length != 0) {
             var tmpl = $('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + protoname);
             if (tmpl.length == 1) {
                 container.html(tmpl.html());
+
+                Object.keys(content[page+"Detour"]).forEach(function(v) {
+                    v = content[page+"Detour"][v];
+                    console.log(page, protoname, v);
+                    if(v.tag == tagname && v.protocol == protoname) {
+                        _protoDetailsSet(page, protoname, v.settings);
+                    }
+                });
             } else {
                 container.html(i18N[clientLang]["Unknown Protocol."]);
             }
@@ -227,6 +245,18 @@
         var uuid = s.join("");
         console.log(uuid);
         object.val(uuid);
+    }
+
+
+    function _protoDetailsSet(page, protoname, details) {
+        switch(protoname) {
+            case "mtproto": {
+                console.log("Protocol:",protoname,details);
+                $('div#'+page+'-config .protodetails #mtproto_email').val(details["users"][0]["email"]);
+                $('div#'+page+'-config .protodetails #mtproto_userlevel').val(parseInt(details["users"][0]["level"]));
+                $('div#'+page+'-config .protodetails #mtproto_secret').val(details["users"][0]["secret"]);
+            }
+        }
     }
 </script>
 </html>
