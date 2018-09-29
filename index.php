@@ -192,8 +192,14 @@
             content = JSON.parse(jsoncontent);
             console.log(content);
         } catch (e) {
-            alert(e);
+            alert("JSON Parse error: \n" + e);
             console.error(e);
+        }
+        if(typeof content["inbound"]["tag"] == "undefined") {
+            content["inbound"]["tag"] = "default";
+        }
+        if(typeof content["outbound"]["tag"] == "undefined") {
+            content["outbound"]["tag"] = "default";
         }
         if(typeof content["inboundDetour"] == "undefined") {
             content["inboundDetour"] = [content["inbound"]];
