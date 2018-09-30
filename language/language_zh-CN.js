@@ -11,7 +11,8 @@ i18N["zh-CN"] = {
     "JSON Content": "JSON 配置文件内容",
     "Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code>": "下面文本框中的内容是根据前面的配置实时更新的 JSON，将其填入 <code>config.json</code> 可直接用于 V2Ray。",
     "Configure inbound connections, see <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/02_protocols.html\">Protocols</a>.": "配置 V2Ray 的传入连接，参见 <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/02_protocols.html\">协议列表</a> 。",
-    "Inbound Tag": "传入连接 标签",
+    "Inbound Tag": "标签",
+    "Listen Address": "监听地址",
     "Port": "端口",
     "Protocol": "协议类型",
     "Shadowsocks": "纸飞机",
@@ -23,5 +24,13 @@ i18N["zh-CN"] = {
     "Generate Secret": "生成 Secret",
     "Email": "Email 地址",
     "Level": "用户等级",
-
+    "Save current": "保存当前设置",
+    "Save current as %s": "保存当前连接为 %s",
+    "Configuration updated.": "配置文件已更新。",
+    "Destination Address": "目的地址",
+    "Destination Port": "目的端口",
+    "Follow Redirect": "自动跟随转发",
+    "Timeout": "超时",
+    "Auto forward packets from IPTABLES": "自动转发来自 iptables 的数据包",
+    "Network Type": "数据包类型"
 };
