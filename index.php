@@ -60,7 +60,15 @@
                                     <div class="form-group">
                                         <label for="inboundTag" class="col-sm-2 control-label">Inbound Tag</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inboundTag" placeholder="">
+                                            <input type="text" class="form-control" id="inboundTag" placeholder=""
+                                                   onchange="$('div#inbound-config #btnSave').text(i18N[using_language]['Save current as %s'].replace(/%s/, this.value));">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="listenAddr" class="col-sm-2 control-label">Listen Address</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="listenAddr" placeholder="">
                                         </div>
                                     </div>
 
@@ -75,9 +83,9 @@
                                         <label for="protocol" class="col-sm-2 control-label">Protocol</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="protocol" onchange="_showproto('inbound', this.value, $('input#inboundTag').val())">
-                                                <option value="">-- Select a protocol --</option>
+                                                <option value="null">-- Select a protocol --</option>
                                                 <option value="shadowsocks">Shadowsocks</option>
-                                                <option value="socks5">Socks5</option>
+                                                <option value="socks">Socks5</option>
                                                 <option value="http">HTTP</option>
                                                 <option value="vmess">VMess</option>
                                                 <option value="mtproto">Telegram MTProto</option>
@@ -88,11 +96,10 @@
 
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Protocol Settings</div>
-                                        <div class="panel-body protodetails" data-currentproto="">
-
-                                        </div>
+                                        <div class="panel-body protodetails" data-currentproto="">Please select a protocol.</div>
                                     </div>
                                 </form>
+                                <button class="btn btn-primary" id="btnSave" style="float: right;" onclick="_protoDetailsCommit('inbound');">Save current</button>
                             </div>
                         </div>
                     </div>
@@ -122,8 +129,9 @@
             <div role="tabpanel" class="tab-pane" id="jsoncontent">
                 <h3>JSON Content</h3>
                 <p class="panedesc">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
-                <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%;" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
+                <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
                 <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
+                &nbsp;<button class="btn btn-default" onclick="">&nbsp; 复制 &nbsp;</button>
             </div>
         </div>
     </div>
@@ -142,14 +150,14 @@
         <div class="form-group">
             <label for="mtproto_email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="mtproto_email" placeholder="">
+                <input type="email" class="form-control" id="mtproto_email" name="mtproto_email" placeholder="">
             </div>
         </div>
 
         <div class="form-group">
             <label for="mtproto_userlevel" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="mtproto_userlevel" placeholder="">
+                <input type="number" class="form-control" id="mtproto_userlevel" name="mtproto_userlevel" placeholder="">
             </div>
         </div>
 
@@ -157,7 +165,7 @@
             <label for="mtproto_secret" class="col-sm-2 control-label">Secret</label>
             <div class="col-sm-10">
                 <div class="input-group">
-                    <input type="text" class="form-control" id="mtproto_secret" placeholder="" style="font-family: Consolas;">
+                    <input type="text" class="form-control" id="mtproto_secret" name="mtproto_secret" style="font-family: Consolas;">
                     <div class="input-group-addon btn btn-secondary"
                          onclick="_mtprotoGenerateSecret($('#mtproto_secret'))">Generate Secret</div>
                 </div>
@@ -172,7 +180,11 @@
 <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="./language/i18N_Loader.js"></script>
 <script src="./language/language_zh-CN.js"></script>
-<script src="./resources/config_handler.js"></script>
+<script src="./resources/js/base.js"></script>
+<script src="./resources/js/pageload.js"></script>
+<script src="./resources/js/protocol-cust.js"></script>
+<script src="./resources/js/protocol-commit.js"></script>
+
 <script>
     content = [];
     clientLang = $('html').attr('lang');
@@ -183,89 +195,6 @@
         _parseJson($('textarea.jsonContent').val());
         $('ul.nav-tabs a.tabs-click:first').click();
     };
-
-    function _parseJson(jsoncontent) {
-        if(jsoncontent.length == 0) {
-            jsoncontent = "{}";
-        }
-        try {
-            content = JSON.parse(jsoncontent);
-            console.log(content);
-        } catch (e) {
-            alert(e);
-            console.error(e);
-        }
-        if(typeof content["inboundDetour"] == "undefined") {
-            content["inboundDetour"] = [content["inbound"]];
-        } else {
-            content["inboundDetour"].push(content["inbound"]);
-        }
-        if(typeof content["outboundDetour"] == "undefined") {
-            content["outboundDetour"] = [content["outbound"]];
-        } else {
-            content["outboundDetour"].push(content["outbound"]);
-        }
-        console.log("Inbound", content.inbound);
-    }
-
-    function _showconn(page, tagname) {
-
-        Object.keys(content[page+"Detour"]).forEach(function(v) {
-            v = content[page + "Detour"][v];
-            console.log(page, protoname, v);
-
-        });
-    }
-
-    function _showproto(page, protoname, tagname) {
-
-        var container = $('div#' + page + '-config div.panel-body.protodetails');
-        if(protoname.length != 0) {
-            var tmpl = $('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + protoname);
-            if (tmpl.length == 1) {
-                container.html(tmpl.html());
-
-                Object.keys(content[page+"Detour"]).forEach(function(v) {
-                    v = content[page+"Detour"][v];
-                    console.log(page, protoname, v);
-                    if(v.tag == tagname && v.protocol == protoname) {
-                        _protoDetailsSet(page, protoname, v.settings);
-                    }
-                });
-            } else {
-                container.html(i18N[clientLang]["Unknown Protocol."]);
-            }
-        } else {
-            container.html(i18N[clientLang]["Please select a protocol."]);
-        }
-    }
-
-    function _mtprotoGenerateSecret(object) {
-        // http://www.ietf.org/rfc/rfc4122.txt
-        var s = [];
-        var hexDigits = "0123456789abcdef";
-        for (var i = 0; i < 36; i++) {
-            s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-        }
-        s[14] = "4"; // bits 12-15 of the time_hi_and_version field to 0010
-        s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1); // bits 6-7 of the clock_seq_hi_and_reserved to 01
-        //s[8] = s[13] = s[18] = s[23] = "-";
-
-        var uuid = s.join("");
-        console.log(uuid);
-        object.val(uuid);
-    }
-
-
-    function _protoDetailsSet(page, protoname, details) {
-        switch(protoname) {
-            case "mtproto": {
-                console.log("Protocol:",protoname,details);
-                $('div#'+page+'-config .protodetails #mtproto_email').val(details["users"][0]["email"]);
-                $('div#'+page+'-config .protodetails #mtproto_userlevel').val(parseInt(details["users"][0]["level"]));
-                $('div#'+page+'-config .protodetails #mtproto_secret').val(details["users"][0]["secret"]);
-            }
-        }
-    }
 </script>
+
 </html>
