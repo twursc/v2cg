@@ -208,6 +208,15 @@
         console.log("Inbound", content.inbound);
     }
 
+    function _showconn(page, tagname) {
+
+        Object.keys(content[page+"Detour"]).forEach(function(v) {
+            v = content[page + "Detour"][v];
+            console.log(page, protoname, v);
+
+        });
+    }
+
     function _showproto(page, protoname, tagname) {
 
         var container = $('div#' + page + '-config div.panel-body.protodetails');
