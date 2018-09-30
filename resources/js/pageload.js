@@ -27,8 +27,11 @@ function _showproto(page, protoname, tagname) {
 
             Object.keys(content[page+"Detour"]).forEach(function(v) {
                 v = content[page+"Detour"][v];
+                //console.log(v);
                 if(v.tag == tagname && v.protocol == protoname) {
-                    _protoDetailsDisplay(page, protoname, v.settings);
+                    if(typeof v.settings != "undefined") {
+                        _protoDetailsDisplay(page, protoname, v.settings);
+                    }
                 }
             });
         } else {

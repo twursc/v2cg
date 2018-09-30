@@ -29,8 +29,9 @@ i18N["zh-CN"] = {
     "Configuration updated.": "配置文件已更新。",
     "Destination Address": "目的地址",
     "Destination Port": "目的端口",
-    "Follow Redirect": "自动跟随转发",
+    "Options": "选项",
     "Timeout": "超时",
     "Auto forward packets from IPTABLES": "自动转发来自 iptables 的数据包",
-    "Network Type": "数据包类型"
+    "Network Type": "协议类型",
+    "second(s)": "秒"
 };

@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<div class="container" style="padding:15px;">
+<div class="container-fluid" style="padding:15px;">
     <div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
@@ -27,10 +27,10 @@
             <li role="presentation"><a class="tabs-click" href="#policy" aria-controls="settings" role="tab" data-toggle="tab">Policy</a></li>
             <li role="presentation"><a class="tabs-click" href="#api" aria-controls="settings" role="tab" data-toggle="tab">API</a></li>
             <li role="presentation"><a class="tabs-click" href="#miscellaneous" aria-controls="settings" role="tab" data-toggle="tab">Miscellaneous</a></li>
-            <li role="presentation" style="float: right;"><a class="tabs-click" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab">JSON Content</a></li>
+            <li role="presentation" style="float: right;"><a class="tabs-click" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab"><b>{JSON}</b></a></li>
         </ul>
         <!-- Tab panes -->
-        <div class="tab-content">
+        <div class="tab-content" style="max-width: 90%; margin: 42px auto;">
             <!--<div role="tabpanel" class="tab-pane active" id="home">Home...</div>-->
             <div role="tabpanel" class="tab-pane" id="inbounds">
                 <h3>Inbounds</h3>
@@ -131,7 +131,7 @@
                 <p class="panedesc">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
                 <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
                 <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
-                &nbsp;<button class="btn btn-default" onclick="">&nbsp; 复制 &nbsp;</button>
+                &nbsp;<button class="btn btn-default" onclick="_copyJsonContent();">&nbsp; 复制 &nbsp;</button>
             </div>
         </div>
     </div>
@@ -163,23 +163,6 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-2 control-label">Follow Redirect</label>
-            <div class="col-sm-4">
-                <p class="form-control-static">
-                    <input type="checkbox" id="dokodemo_followredir" name="dokodemo_followredir">
-                    <span>Auto forward packets from IPTABLES</span>
-                </p>
-            </div>
-            <label for="dokodemo_followredir" class="col-sm-2 control-label">Network Type</label>
-            <div class="col-sm-4">
-                <p class="form-control-static">
-                    <input type="checkbox" id="dokodemo_network_tcp" name="dokodemo_network_tcp"> TCP &nbsp;
-                    <input type="checkbox" id="dokodemo_network_udp" name="dokodemo_network_udp"> UDP &nbsp;
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
             <label for="dokodemo_timeout" class="col-sm-2 control-label">Timeout</label>
             <div class="col-sm-10">
                 <div class="input-group">
@@ -193,6 +176,25 @@
             <label for="dokodemo_userlevel" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
                 <input type="number" class="form-control" id="dokodemo_userlevel" name="dokodemo_userlevel" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Options</label>
+            <div class="col-sm-4">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;">
+                        <input type="checkbox" id="dokodemo_followredir" name="dokodemo_followredir">
+                        <span>Auto forward packets from IPTABLES</span>
+                    </label>
+                </p>
+            </div>
+            <label for="dokodemo_followredir" class="col-sm-2 control-label">Network Type</label>
+            <div class="col-sm-4">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;"><input type="checkbox" id="dokodemo_network_tcp" name="dokodemo_network_tcp"> TCP</label> &nbsp;
+                    <label style="font-weight: normal;"><input type="checkbox" id="dokodemo_network_udp" name="dokodemo_network_udp"> UDP</label> &nbsp;
+                </p>
             </div>
         </div>
 
