@@ -57,7 +57,7 @@
                         <div class="col-sm-10" id="inbound-config" style="width: calc(100% - 260px);" data-inboundtag="to-japan">
                             <div class="conn-table-container">
                                 <form class="form-horizontal">
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding: 0 16px;">
                                         <label for="inboundTag" class="col-sm-2 control-label">Inbound Tag</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="inboundTag" placeholder=""
@@ -65,21 +65,21 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding: 0 16px;">
                                         <label for="listenAddr" class="col-sm-2 control-label">Listen Address</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="listenAddr" placeholder="">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding: 0 16px;">
                                         <label for="listenPort" class="col-sm-2 control-label">Port</label>
                                         <div class="col-sm-10">
                                             <input type="number" class="form-control" id="listenPort" placeholder="">
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" style="padding: 0 16px;">
                                         <label for="protocol" class="col-sm-2 control-label">Protocol</label>
                                         <div class="col-sm-10">
                                             <select class="form-control" id="protocol" onchange="_showproto('inbound', this.value, $('input#inboundTag').val())">
@@ -146,6 +146,58 @@
             </tbody>
         </table>
     </div>
+
+    <div class="proto_tmpl_inbound" id="dokodemo-door">
+        <div class="form-group">
+            <label for="dokodemo_destaddr" class="col-sm-2 control-label">Destination Address</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="dokodemo_destaddr" name="dokodemo_destaddr" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dokodemo_destport" class="col-sm-2 control-label">Destination Port</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="dokodemo_destport" name="dokodemo_destport" placeholder="">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Follow Redirect</label>
+            <div class="col-sm-4">
+                <p class="form-control-static">
+                    <input type="checkbox" id="dokodemo_followredir" name="dokodemo_followredir">
+                    <span>Auto forward packets from IPTABLES</span>
+                </p>
+            </div>
+            <label for="dokodemo_followredir" class="col-sm-2 control-label">Network Type</label>
+            <div class="col-sm-4">
+                <p class="form-control-static">
+                    <input type="checkbox" id="dokodemo_network_tcp" name="dokodemo_network_tcp"> TCP &nbsp;
+                    <input type="checkbox" id="dokodemo_network_udp" name="dokodemo_network_udp"> UDP &nbsp;
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dokodemo_timeout" class="col-sm-2 control-label">Timeout</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input type="number" class="form-control" id="dokodemo_timeout" name="dokodemo_timeout">
+                    <div class="input-group-addon">second(s)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="dokodemo_userlevel" class="col-sm-2 control-label">Level</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="dokodemo_userlevel" name="dokodemo_userlevel" placeholder="">
+            </div>
+        </div>
+
+    </div>
+
     <div class="proto_tmpl_inbound" id="mtproto">
         <div class="form-group">
             <label for="mtproto_email" class="col-sm-2 control-label">Email</label>

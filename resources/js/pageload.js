@@ -2,13 +2,13 @@
 
 function _showconn(page, tagname) {
 
-    Object.keys(content[page+"Detour"]).forEach(function(v) {
+    Object.keys(content[page + "Detour"]).forEach(function (v) {
         v = content[page + "Detour"][v];
-        console.log(page, tagname, v);
-        if(v.tag == tagname) {
-            if(typeof v['listen'] == "undefined") {
+        if (v.tag == tagname) {
+            if (typeof v['listen'] == "undefined") {
                 v['listen'] = "0.0.0.0";
             }
+            $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
             $('div#' + page + '-config #inboundTag').val(tagname).change();
             $('div#' + page + '-config #listenAddr').val(v['listen']);
             $('div#' + page + '-config #listenPort').val(v['port']);
@@ -27,7 +27,6 @@ function _showproto(page, protoname, tagname) {
 
             Object.keys(content[page+"Detour"]).forEach(function(v) {
                 v = content[page+"Detour"][v];
-                console.log(page, protoname, v);
                 if(v.tag == tagname && v.protocol == protoname) {
                     _protoDetailsDisplay(page, protoname, v.settings);
                 }

@@ -30,7 +30,6 @@ function _parseJson(jsoncontent) {
             content["outboundDetour"].push(content["outbound"]);
         }
     }
-    console.log("Inbound", content.inbound);
 }
 
 function onContentModified() {
