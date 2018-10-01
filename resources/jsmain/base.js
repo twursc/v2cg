@@ -11,9 +11,10 @@ function _parseJson(jsoncontent) {
         console.error(e);
     }
     if (typeof content["inbound"] != "undefined") {
-        //content["inbound"].default = true;
         if (typeof content["inbound"].tag == "undefined") {
             content["inbound"].tag = "default";
+        } else {
+            content["inbound"].default = true;
         }
         if (typeof content["inboundDetour"] == "undefined") {
             content["inboundDetour"] = [content["inbound"]];
@@ -27,9 +28,10 @@ function _parseJson(jsoncontent) {
         }
     }
     if (typeof content["outbound"] != "undefined") {
-        //content["outbound"].default = true;
         if (typeof content["outbound"].tag == "undefined") {
             content["outbound"].tag = "default";
+        } else {
+            content["outbound"].default = true;
         }
         if (typeof content["outboundDetour"] == "undefined") {
             content["outboundDetour"] = [content["outbound"]];
@@ -69,6 +71,7 @@ function _copyJsonContent() {
 
 function onContentModified() {
     var defaultInbound = _getDetourIndex(content["inboundDetour"], "default");
+    delete content["inboundDetour"][defaultInbound].default;
     if(defaultInbound == -1) {
         if(typeof content["inboundDetour"][0] != "undefined") {
             content["inbound"] = content["inboundDetour"][0];
@@ -79,6 +82,7 @@ function onContentModified() {
     }
 
     var defaultOutbound = _getDetourIndex(content["outboundDetour"], "default");
+    delete content["outboundDetour"][defaultOutbound].default;
     if(defaultOutbound == -1) {
         if(typeof content["outboundDetour"][0] != "undefined") {
             content["outbound"] = content["outboundDetour"][0];
@@ -98,6 +102,10 @@ function _getDetourIndex(detours, tagname) {
     Object.keys(detours).forEach(function(v) {
         if (detours[v].tag == tagname) {
             tagindex = v;
+        } else {
+            if(detours[v].default) {
+                tagindex = v;
+            }
         }
     });
     return tagindex;
@@ -119,6 +127,7 @@ function _setDefaultDetour(page, tagname) {
         if (renameDefault.trim().length != 0) {
             var defaultDetour = _getDetourIndex(content[page + "Detour"], "default");
             content[page + "Detour"][defaultDetour].tag = renameDefault;
+            delete content[page+"Detour"][defaultDetour].default;
             var targetDetour = _getDetourIndex(content[page + "Detour"], tagname);
             content[page + "Detour"][targetDetour].tag = "default";
             onContentModified();
