@@ -1,7 +1,7 @@
 $('body').append('<script src="./resources/jsmain/mtproto.js"></script>');
 
 function _protoDetailsDisplay(page, protoname, details) {
-    console.log("Protocol:",protoname,details);
+    //console.log("Protocol:",protoname,details);
     switch(protoname) {
         case "mtproto": {
             $('div#'+page+'-config .protodetails #mtproto_email').val(details["users"][0]["email"]);

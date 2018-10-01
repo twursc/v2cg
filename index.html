@@ -41,6 +41,8 @@
                         <div class="col-sm-2" id="inbounds-list">
                             <div class="conn-table-container">
                                 <table class="table table-hover">
+                                    <tbody></tbody>
+                                    <!--
                                     <tr class="inbound-obj" data-inbound-tag="to-japan" data-inbound-primary="1">
                                         <td class="inbound-icon"><img src="./resources/protocol-icons/vmess.png" style="width: 16px"></td>
                                         <td class="inbound-name">to-japan</td>
@@ -48,15 +50,16 @@
                                             <a href="#" class="opr-setprimary"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></a>&nbsp;
                                             <a href="#" class="opr-delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;
                                         </td>
-                                    </tr>
+                                    </tr>-->
                                 </table>
-                                <button class="btn btn-default inlist-button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                                <button class="btn btn-default inlist-button" onclick="_formReset('inbound')">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
                             </div>
                         </div>
 
-                        <div class="col-sm-10" id="inbound-config" style="width: calc(100% - 260px);" data-inboundtag="to-japan">
+                        <div class="col-sm-10" id="inbound-config" style="width: calc(100% - 260px);" data-inboundtag="">
                             <div class="conn-table-container">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" id="inbound-config-form">
                                     <div class="form-group" style="padding: 0 16px;">
                                         <label for="inboundTag" class="col-sm-2 control-label">Inbound Tag</label>
                                         <div class="col-sm-10">
@@ -248,6 +251,9 @@
         _applyI18N();
         _parseJson($('textarea.jsonContent').val());
         $('ul.nav-tabs a.tabs-click:first').click();
+        Object.keys(document.forms).forEach(function(k) {
+            document.forms[k].reset();
+        });
     };
 </script>
 

@@ -33,5 +33,7 @@ i18N["zh-CN"] = {
     "Timeout": "超时",
     "Auto forward packets from IPTABLES": "自动转发来自 iptables 的数据包",
     "Network Type": "协议类型",
-    "second(s)": "秒"
+    "second(s)": "秒",
+    "Reset the tag of original default detour to: ": "将默认连接的 tag 更改为: ",
+    "Invalid tag supplied.": "无效 tag。"
 };

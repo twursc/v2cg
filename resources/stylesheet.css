@@ -21,8 +21,9 @@
     transition: 0.25s;
 }
 
-#inbounds .row div#inbounds-list .inbound-obj:first-child .opr-setprimary { display: none; }
 #inbounds .row div#inbounds-list .inbound-obj { cursor: pointer; }
+#inbounds .row div#inbounds-list .inbound-obj:first-child .opr-setprimary { display: none; }
+#inbounds .row div#inbounds-list .inbound-obj:first-child .opr-delete { display: none; }
 #inbounds .row div#inbounds-list .inbound-icon { width: 32px; }
 #inbounds .row div#inbounds-list .inbound-operation { text-align: right; }
 
