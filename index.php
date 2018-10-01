@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>V2Ray Configuration Generator</title>
-    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="./resources/stylesheet.css" rel="stylesheet">
+    <link href="./resources/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" type="image/png" href="./resources/favicon.ico" id="favicon">
     <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -230,14 +230,14 @@
 
 </body>
 
-<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="./resources/jquery.min.js"></script>
+<script src="./resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="./language/i18N_Loader.js"></script>
 <script src="./language/language_zh-CN.js"></script>
-<script src="./resources/js/base.js"></script>
-<script src="./resources/js/pageload.js"></script>
-<script src="./resources/js/protocol-cust.js"></script>
-<script src="./resources/js/protocol-commit.js"></script>
+<script src="./resources/jsmain/base.js"></script>
+<script src="./resources/jsmain/pageload.js"></script>
+<script src="./resources/jsmain/protocol-cust.js"></script>
+<script src="./resources/jsmain/protocol-commit.js"></script>
 
 <script>
     content = [];
