@@ -30,6 +30,26 @@ function _protoDetailsDisplay(page, protoname, details) {
             }
             break;
         }
+        case "shadowsocks": {
+            var shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
+
+            $('div#'+page+'-config .protodetails #shadowsocks_email').val(details["email"]);
+            $('div#'+page+'-config .protodetails #shadowsocks_crypto').val(details["method"]);
+            $('div#'+page+'-config .protodetails #shadowsocks_password').val(details["password"]);
+            $('div#'+page+'-config .protodetails #shadowsocks_userlevel').val(parseInt(details["userLevel"]));
+            $('div#'+page+'-config .protodetails #shadowsocks_enable_ota')[0].checked = details["ota"];
+            if(shadowsocks_applied_protocol.indexOf('tcp') != "-1") {
+                $('div#' + page + '-config .protodetails #shadowsocks_network_tcp')[0].checked = true;
+            } else {
+                $('div#' + page + '-config .protodetails #shadowsocks_network_tcp')[0].checked = false;
+            }
+            if(shadowsocks_applied_protocol.indexOf('udp') != "-1") {
+                $('div#' + page + '-config .protodetails #shadowsocks_network_udp')[0].checked = true;
+            } else {
+                $('div#' + page + '-config .protodetails #shadowsocks_network_udp')[0].checked = false;
+            }
+
+        }
     }
 }
 
@@ -53,12 +73,26 @@ function _protoDetailsParse(page, protoname, form) {
             if($("div#"+page+"-config #dokodemo_network_tcp")[0].checked) { protocol_types.push("tcp"); }
             if($("div#"+page+"-config #dokodemo_network_udp")[0].checked) { protocol_types.push("udp"); }
             return {
-                address: form["dokodemo_destaddr"],
-                port: form["dokodemo_destport"],
-                followRedirect: $("div#"+page+"-config #dokodemo_followredir")[0].checked,
-                network: protocol_types.join(','),
-                timeout: parseInt(form["dokodemo_timeout"]),
-                userLevel: parseInt(form["dokodemo_userlevel"])
+                "address": form["dokodemo_destaddr"],
+                "port": form["dokodemo_destport"],
+                "followRedirect": $("div#"+page+"-config #dokodemo_followredir")[0].checked,
+                "network": protocol_types.join(','),
+                "timeout": parseInt(form["dokodemo_timeout"]),
+                "userLevel": parseInt(form["dokodemo_userlevel"])
+            }
+        }
+
+        case "shadowsocks": {
+            var protocol_types = [];
+            if($("div#"+page+"-config #shadowsocks_network_tcp")[0].checked) { protocol_types.push("tcp"); }
+            if($("div#"+page+"-config #shadowsocks_network_udp")[0].checked) { protocol_types.push("udp"); }
+            return {
+                "email": form["shadowsocks_email"],
+                "method": form["shadowsocks_crypto"],
+                "password": form["shadowsocks_password"],
+                "network": protocol_types.join(','),
+                "ota": $("div#"+page+"-config #shadowsocks_enable_ota")[0].checked,
+                "userLevel": parseInt(form["shadowsocks_userlevel"])
             }
         }
     }

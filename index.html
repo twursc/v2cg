@@ -30,7 +30,7 @@
             <li role="presentation" style="float: right;"><a class="tabs-click" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab"><b>{JSON}</b></a></li>
         </ul>
         <!-- Tab panes -->
-        <div class="tab-content" style="max-width: 90%; margin: 42px auto;">
+        <div class="tab-content" style="max-width: 95%; margin: 24px auto;">
             <!--<div role="tabpanel" class="tab-pane active" id="home">Home...</div>-->
             <div role="tabpanel" class="tab-pane" id="inbounds">
                 <h3>Inbounds</h3>
@@ -63,7 +63,7 @@
                                     <div class="form-group" style="padding: 0 16px;">
                                         <label for="inboundTag" class="col-sm-2 control-label">Inbound Tag</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inboundTag" placeholder=""
+                                            <input type="text" class="form-control" id="inboundTag"
                                                    onchange="$('div#inbound-config #btnSave').text(i18N[using_language]['Save current as %s'].replace(/%s/, this.value));">
                                         </div>
                                     </div>
@@ -71,14 +71,14 @@
                                     <div class="form-group" style="padding: 0 16px;">
                                         <label for="listenAddr" class="col-sm-2 control-label">Listen Address</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="listenAddr" placeholder="">
+                                            <input type="text" class="form-control" id="listenAddr">
                                         </div>
                                     </div>
 
                                     <div class="form-group" style="padding: 0 16px;">
                                         <label for="listenPort" class="col-sm-2 control-label">Port</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="listenPort" placeholder="">
+                                            <input type="number" class="form-control" id="listenPort">
                                         </div>
                                     </div>
 
@@ -150,18 +150,75 @@
         </table>
     </div>
 
+    <div class="proto_tmpl_inbound" id="shadowsocks">
+        <div class="form-group">
+            <label for="shadowsocks_email" class="col-sm-2 control-label">Email</label>
+            <div class="col-sm-10">
+                <input type="email" class="form-control" id="shadowsocks_email" name="shadowsocks_email">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="shadowsocks_crypto" class="col-sm-2 control-label">Encrypt Method</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="shadowsocks_crypto" name="shadowsocks_crypto" >
+                    <option value="chacha20-ietf-poly1305">[AEAD] chacha20-ietf-poly1305</option>
+                    <option value="aes-256-gcm">[AEAD] aes-256-gcm</option>
+                    <option value="aes-128-gcm">[AEAD] aes-128-gcm</option>
+                    <option value="aes-256-cfb">aes-256-cfb</option>
+                    <option value="aes-128-cfb">aes-128-cfb</option>
+                    <option value="chacha20">chacha20</option>
+                    <option value="chacha20-ietf">chacha20-ietf</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="shadowsocks_password" class="col-sm-2 control-label">Password</label>
+            <div class="col-sm-10">
+                <input type="password" class="form-control" id="shadowsocks_password" name="shadowsocks_password">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="shadowsocks_userlevel" class="col-sm-2 control-label">Level</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="shadowsocks_userlevel" name="shadowsocks_userlevel">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Options</label>
+            <div class="col-sm-5">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;">
+                        <input type="checkbox" id="shadowsocks_enable_ota" name="shadowsocks_enable_ota">
+                        <span>Enable One-Time-Authentication (Unavailable while AEAD encryption selected)</span>
+                    </label>
+                </p>
+            </div>
+            <label class="col-sm-2 control-label">Network Type</label>
+            <div class="col-sm-3">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;"><input type="checkbox" id="shadowsocks_network_tcp" name="shadowsocks_network_tcp"> TCP</label> &nbsp;
+                    <label style="font-weight: normal;"><input type="checkbox" id="shadowsocks_network_udp" name="shadowsocks_network_udp"> UDP</label> &nbsp;
+                </p>
+            </div>
+        </div>
+    </div>
+
     <div class="proto_tmpl_inbound" id="dokodemo-door">
         <div class="form-group">
             <label for="dokodemo_destaddr" class="col-sm-2 control-label">Destination Address</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="dokodemo_destaddr" name="dokodemo_destaddr" placeholder="">
+                <input type="text" class="form-control" id="dokodemo_destaddr" name="dokodemo_destaddr">
             </div>
         </div>
 
         <div class="form-group">
             <label for="dokodemo_destport" class="col-sm-2 control-label">Destination Port</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="dokodemo_destport" name="dokodemo_destport" placeholder="">
+                <input type="number" class="form-control" id="dokodemo_destport" name="dokodemo_destport">
             </div>
         </div>
 
@@ -178,13 +235,13 @@
         <div class="form-group">
             <label for="dokodemo_userlevel" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="dokodemo_userlevel" name="dokodemo_userlevel" placeholder="">
+                <input type="number" class="form-control" id="dokodemo_userlevel" name="dokodemo_userlevel">
             </div>
         </div>
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Options</label>
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <p class="form-control-static">
                     <label style="font-weight: normal;">
                         <input type="checkbox" id="dokodemo_followredir" name="dokodemo_followredir">
@@ -193,7 +250,7 @@
                 </p>
             </div>
             <label for="dokodemo_followredir" class="col-sm-2 control-label">Network Type</label>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <p class="form-control-static">
                     <label style="font-weight: normal;"><input type="checkbox" id="dokodemo_network_tcp" name="dokodemo_network_tcp"> TCP</label> &nbsp;
                     <label style="font-weight: normal;"><input type="checkbox" id="dokodemo_network_udp" name="dokodemo_network_udp"> UDP</label> &nbsp;
@@ -207,14 +264,14 @@
         <div class="form-group">
             <label for="mtproto_email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="mtproto_email" name="mtproto_email" placeholder="">
+                <input type="email" class="form-control" id="mtproto_email" name="mtproto_email">
             </div>
         </div>
 
         <div class="form-group">
             <label for="mtproto_userlevel" class="col-sm-2 control-label">Level</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="mtproto_userlevel" name="mtproto_userlevel" placeholder="">
+                <input type="number" class="form-control" id="mtproto_userlevel" name="mtproto_userlevel">
             </div>
         </div>
 

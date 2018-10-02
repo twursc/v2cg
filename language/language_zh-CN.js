@@ -35,5 +35,8 @@ i18N["zh-CN"] = {
     "Network Type": "协议类型",
     "second(s)": "秒",
     "Reset the tag of original default detour to: ": "将默认连接的 tag 更改为: ",
-    "Invalid tag supplied.": "无效 tag。"
+    "Invalid tag supplied.": "无效 tag。",
+    "Encrypt Method": "加密方式",
+    "Enable One-Time-Authentication (Unavailable while AEAD encryption selected)": "启用一次性认证（选择 AEAD 加密时无效）",
+    "Password": "密码"
 };
