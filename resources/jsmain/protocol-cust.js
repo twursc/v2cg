@@ -5,6 +5,23 @@ $('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script
 function _protoDetailsDisplay(page, protoname, details) {
     //console.log("Protocol:",protoname,details);
     switch(protoname) {
+        case "socks": {
+
+            $(".protodetails table#socksauth_users tbody").html("");
+            Object.keys(details["accounts"]).forEach(function(k) {
+                var info = details["accounts"][k];
+                var newrow = socksAuth_addUser();
+                $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authuser_"+newrow+"]").val(info["user"]);
+                $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authpass_"+newrow+"]").val(info["pass"]);
+            });
+            $('div#'+page+'-config .protodetails #socks_timeout').val(parseInt(details["timeout"]));
+            $('div#'+page+'-config .protodetails #socks_userlevel').val(parseInt(details["userLevel"]));
+            $('div#'+page+'-config .protodetails #socks_udpforwarding')[0].checked = details["udp"];
+            $('div#'+page+'-config .protodetails #socks_localaddr').val(details["ip"]);
+            $('div#'+page+'-config .protodetails #socks_enableauth')[0].checked = (details["auth"] == "password");
+            break;
+        }
+
         case "http": {
 
             $(".protodetails table#httpauth_users tbody").html("");
@@ -26,6 +43,7 @@ function _protoDetailsDisplay(page, protoname, details) {
             $('div#'+page+'-config .protodetails #mtproto_secret').val(details["users"][0]["secret"]);
             break;
         }
+
         case "dokodemo-door": {
             if(parseInt(details["timeout"]) == 0) { details["timeout"] = 300; }
             var dokodemo_applied_protocol = details["network"].toLowerCase().split(',');
@@ -47,6 +65,7 @@ function _protoDetailsDisplay(page, protoname, details) {
             }
             break;
         }
+
         case "shadowsocks": {
             var shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
 
@@ -72,6 +91,36 @@ function _protoDetailsDisplay(page, protoname, details) {
 function _protoDetailsParse(page, protoname, form) {
     console.log("_protoDetailsParse: ", page, protoname, form);
     switch(protoname) {
+        case "socks": {
+            var authtype = "noauth";
+            var socksAccounts = [];
+            Object.keys(form).forEach(function(k) {
+                if(k.substr(0,15) == "socks_authpass_") {
+                    var lf = k.split('_');
+                    if(typeof form["socks_authuser_"+lf[2]] != undefined) {
+                        if(form["socks_authuser_"+lf[2]].length > 0 && form[k] > 0) {
+                            socksAccounts.push({
+                                "user": form["socks_authuser_"+lf[2]],
+                                "pass": form[k]
+                            });
+                        }
+                    }
+                } //TODO: Bugfix - synchronized process
+            });
+            console.log("socksAccounts:", socksAccounts);
+            if($("div#" + page + "-config #socks_udpforwarding")[0].checked) {
+                authtype = "password";
+            }
+            return {
+                "auth": authtype,
+                "accounts": socksAccounts,
+                "timeout": parseInt(form["socks_timeout"]),
+                "udp": $("div#" + page + "-config #socks_udpforwarding")[0].checked,
+                "ip": form["socks_localaddr"],
+                "userLevel": parseInt(form["socks_userlevel"])
+            }
+        }
+
         case "http": {
             var httpauthAccounts = [];
             Object.keys(form).forEach(function(k) {
@@ -85,7 +134,7 @@ function _protoDetailsParse(page, protoname, form) {
                             });
                         }
                     }
-                }
+                } //TODO: Bugfix - synchronized process
             });
             console.log("httpauthAccounts:", httpauthAccounts);
             return {

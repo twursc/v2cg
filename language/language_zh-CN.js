@@ -39,7 +39,12 @@ i18N["zh-CN"] = {
     "Encrypt Method": "加密方式",
     "Enable One-Time-Authentication (Unavailable while AEAD encryption selected)": "启用一次性认证（选择 AEAD 加密时无效）",
     "Password": "密码",
+    "Accounts": "帐号列表",
     "Username": "用户名",
     "Remove": "删除",
-    "Add User": "添加用户"
+    "Add User": "添加用户",
+    "Authentication": "访问认证",
+    "Enable Authentication": "此 SOCKS 连接需要认证",
+    "Enable UDP Forwarding": "使能 UDP 转发",
+    "Local IP address": "本机 IP 地址"
 };

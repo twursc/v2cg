@@ -19,3 +19,24 @@ function httpAuth_removeUser(obj) {
     thePass.value = "";
     obj.disabled = true;
 }
+
+function socksAuth_addUser() {
+    var count = $(".protodetails table#socksauth_users tbody .socks_authuser_item").length;
+    var tmpl = "<tr class=\"socks_authuser_item\"><td><input class=\"form-control input-sm\" placeholder=\"" + i18N[using_language]["Username"] + "\" type=\"text\" name=\"socks_authuser_" + count + "\"></td>\n" +
+        "    <td><input class=\"form-control input-sm\" placeholder=\"" + i18N[using_language]["Password"] + "\" type=\"password\" name=\"socks_authpass_" + count + "\"></td>\n" +
+        "    <td><button class=\"btn btn-default btn-sm\" onclick=\"socksAuth_removeUser(this)\">" +
+        "        <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp; <span>" + i18N[using_language]["Remove"] + "</span></button></td>\n" +
+        "</tr>";
+    $(".protodetails table#socksauth_users tbody").append(tmpl);
+    return count;
+}
+
+function socksAuth_removeUser(obj) {
+    var theUser = obj.parentNode.parentNode.children[0].children[0];
+    var thePass = obj.parentNode.parentNode.children[1].children[0];
+    theUser.disabled = true;
+    theUser.value = "";
+    thePass.disabled = true;
+    thePass.value = "";
+    obj.disabled = true;
+}
