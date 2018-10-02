@@ -1,8 +1,25 @@
-$('body').append('<script src="./resources/jsmain/mtproto.js"></script>');
+$('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script>')
+    .append('<script src="./resources/jsmain/protocols/http.js"></script>')
+    .append('<script src="./resources/jsmain/protocols/shadowsocks.js"></script>');
 
 function _protoDetailsDisplay(page, protoname, details) {
     //console.log("Protocol:",protoname,details);
     switch(protoname) {
+        case "http": {
+
+            $(".protodetails table#httpauth_users tbody").html("");
+            Object.keys(details["accounts"]).forEach(function(k) {
+                var info = details["accounts"][k];
+                var newrow = httpAuth_addUser();
+                $(".protodetails table#httpauth_users tbody tr.http_authuser_item input[name=http_authuser_"+newrow+"]").val(info["user"]);
+                $(".protodetails table#httpauth_users tbody tr.http_authuser_item input[name=http_authpass_"+newrow+"]").val(info["pass"]);
+            });
+            $('div#'+page+'-config .protodetails #http_timeout').val(parseInt(details["timeout"]));
+            $('div#'+page+'-config .protodetails #http_userlevel').val(parseInt(details["userLevel"]));
+            $('div#'+page+'-config .protodetails #http_allowtransport')[0].checked = details["allowTransport"];
+            break;
+        }
+
         case "mtproto": {
             $('div#'+page+'-config .protodetails #mtproto_email').val(details["users"][0]["email"]);
             $('div#'+page+'-config .protodetails #mtproto_userlevel').val(parseInt(details["users"][0]["level"]));
@@ -34,7 +51,7 @@ function _protoDetailsDisplay(page, protoname, details) {
             var shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
 
             $('div#'+page+'-config .protodetails #shadowsocks_email').val(details["email"]);
-            $('div#'+page+'-config .protodetails #shadowsocks_crypto').val(details["method"]);
+            $('div#'+page+'-config .protodetails #shadowsocks_crypto').val(details["method"]).change();
             $('div#'+page+'-config .protodetails #shadowsocks_password').val(details["password"]);
             $('div#'+page+'-config .protodetails #shadowsocks_userlevel').val(parseInt(details["userLevel"]));
             $('div#'+page+'-config .protodetails #shadowsocks_enable_ota')[0].checked = details["ota"];
@@ -48,7 +65,6 @@ function _protoDetailsDisplay(page, protoname, details) {
             } else {
                 $('div#' + page + '-config .protodetails #shadowsocks_network_udp')[0].checked = false;
             }
-
         }
     }
 }
@@ -56,6 +72,30 @@ function _protoDetailsDisplay(page, protoname, details) {
 function _protoDetailsParse(page, protoname, form) {
     console.log("_protoDetailsParse: ", page, protoname, form);
     switch(protoname) {
+        case "http": {
+            var httpauthAccounts = [];
+            Object.keys(form).forEach(function(k) {
+                if(k.substr(0,14) == "http_authpass_") {
+                    var lf = k.split('_');
+                    if(typeof form["http_authuser_"+lf[2]] != undefined) {
+                        if(form["http_authuser_"+lf[2]].length > 0 && form[k] > 0) {
+                            httpauthAccounts.push({
+                                "user": form["http_authuser_"+lf[2]],
+                                "pass": form[k]
+                            });
+                        }
+                    }
+                }
+            });
+            console.log("httpauthAccounts:", httpauthAccounts);
+            return {
+                "accounts": httpauthAccounts,
+                "timeout": parseInt(form["http_timeout"]),
+                "allowTransport": $("div#" + page + "-config #http_allowtransport")[0].checked,
+                "userLevel": parseInt(form["http_userlevel"])
+            }
+        }
+
         case "mtproto": {
             return {
                 "users": [

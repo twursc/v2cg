@@ -20,7 +20,7 @@ i18N["zh-CN"] = {
     "Protocol Settings": "协议细节",
     "-- Select a protocol --": "-- 请选择协议。 --",
     "Please select a protocol.": "请选择协议。",
-    "Unknown Protocol.": "不支持配置此协议。",
+    "Unknown Protocol.": "没有可配置的选项。",
     "Generate Secret": "生成 Secret",
     "Email": "Email 地址",
     "Level": "用户等级",
@@ -38,5 +38,8 @@ i18N["zh-CN"] = {
     "Invalid tag supplied.": "无效 tag。",
     "Encrypt Method": "加密方式",
     "Enable One-Time-Authentication (Unavailable while AEAD encryption selected)": "启用一次性认证（选择 AEAD 加密时无效）",
-    "Password": "密码"
+    "Password": "密码",
+    "Username": "用户名",
+    "Remove": "删除",
+    "Add User": "添加用户"
 };
