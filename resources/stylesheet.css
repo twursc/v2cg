@@ -3,6 +3,7 @@
 * { transition: 0.25s; }
 .panedesc { font-size: 0.95em; margin-bottom: 24px;}
 .panel-heading { padding: 8px 16px; font-weight: bold; text-align: center; }
+.form-group button { width: 100%; }
 
 #inbounds .row { margin: 0 !important; padding: 0 8px; }
 #inbounds .row div#inbounds-list { padding: 0; min-height: 540px; }
