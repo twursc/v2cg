@@ -46,5 +46,11 @@ i18N["zh-CN"] = {
     "Authentication": "访问认证",
     "Enable Authentication": "此 SOCKS 连接需要认证",
     "Enable UDP Forwarding": "使能 UDP 转发",
-    "Local IP address": "本机 IP 地址"
+    "Local IP address": "本机 IP 地址",
+    "Client UUID": "用户 UUID",
+    "AlterID": "附加 UUID 数量",
+    "Generate UUID": "生成 UUID",
+    "Default level": "默认用户等级",
+    "Default AlterID": "默认 AlterID",
+    "Disable insecure encryption": "禁止客户端使用不安全的加密方式"
 };

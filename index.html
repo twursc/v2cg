@@ -142,12 +142,51 @@
 
 <div class="proto_tmpl_container" style="display: none">
     <div class="proto_tmpl_inbound" id="vmess">
-        <table class="table table-bordered">
-            <thead><tr><td>Email</td><td>UUID</td><td>Level</td><td>Alter ID</td></tr></thead>
-            <tbody>
-            <tr><td>email1@user.domain</td><td>1</td><td>64</td></tr>
-            </tbody>
-        </table>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Accounts</label>
+            <div class="col-sm-10">
+                <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                    <table class="table table-condensed" id="vmess_users" style="margin: 0 !important;">
+                        <thead style="display: none;"><tr><td>Email</td><td>UUID</td><td>Level</td><td>AlterID</td><td></td></tr></thead>
+                        <tbody></tbody>
+                        <tfoot><tr><td colspan="5"><button class="btn btn-default btn-sm" onclick="vmess_addUser();">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add User</span></button></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vmess_detourto" class="col-sm-2 control-label">Detour to</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="vmess_detourto" name="vmess_detourto">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="vmess_default_level" class="col-sm-2 control-label">Default level</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" id="vmess_default_level" name="vmess_default_level" value="0">
+            </div>
+            <label for="vmess_default_alterid" class="col-sm-2 control-label">Default AlterID</label>
+            <div class="col-sm-4">
+                <input type="number" class="form-control" id="vmess_default_alterid" name="vmess_default_alterid" value="32">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Options</label>
+            <div class="col-sm-5">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;">
+                        <input type="checkbox" id="vmess_disableInsecureEncryption" name="vmess_disableInsecureEncryption">
+                        <span>Disable insecure encryption</span>
+                    </label>
+                </p>
+            </div>
+        </div>
     </div>
 
     <div class="proto_tmpl_inbound" id="socks">

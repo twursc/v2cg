@@ -1,6 +1,7 @@
 $('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script>')
     .append('<script src="./resources/jsmain/protocols/http.js"></script>')
-    .append('<script src="./resources/jsmain/protocols/shadowsocks.js"></script>');
+    .append('<script src="./resources/jsmain/protocols/shadowsocks.js"></script>')
+    .append('<script src="./resources/jsmain/protocols/vmess.js"></script>');
 
 function _protoDetailsDisplay(page, protoname, details) {
     //console.log("Protocol:",protoname,details);
@@ -91,6 +92,25 @@ function _protoDetailsDisplay(page, protoname, details) {
 function _protoDetailsParse(page, protoname, form) {
     console.log("_protoDetailsParse: ", page, protoname, form);
     switch(protoname) {
+        case "vmess": {
+            var vmessClients = [];
+            Object.keys(form).forEach(function(k) {
+                if(k.substr(0,14) == "http_authpass_") {
+                    var lf = k.split('_');
+                    if(typeof form["http_authuser_"+lf[2]] != undefined) {
+                        if(form["http_authuser_"+lf[2]].length > 0 && form[k] > 0) {
+                            httpauthAccounts.push({
+                                "user": form["http_authuser_"+lf[2]],
+                                "pass": form[k]
+                            });
+                        }
+                    }
+                } //TODO: Bugfix - synchronized process
+            });
+            console.log("vmessClients:", vmessClients);
+            return { }
+        }
+
         case "socks": {
             var authtype = "noauth";
             var socksAccounts = [];
@@ -108,7 +128,7 @@ function _protoDetailsParse(page, protoname, form) {
                 } //TODO: Bugfix - synchronized process
             });
             console.log("socksAccounts:", socksAccounts);
-            if($("div#" + page + "-config #socks_udpforwarding")[0].checked) {
+            if($("div#" + page + "-config #socks_enableauth")[0].checked) {
                 authtype = "password";
             }
             return {
