@@ -2,10 +2,10 @@
 function _protoDetailsCommit(page) {
     var detourIndex = -1;
     var detourDetails = {};
-    var tagname = $('div#' + page + '-config #inboundTag').val();
-    var listenAddr = $('div#' + page + '-config #listenAddr').val();
-    var listenPort = $('div#' + page + '-config #listenPort').val();
-    var protoname = $('div#' + page + '-config #protocol').val();
+    var tagname = $('div#' + page + '-config #'+page+'Tag').val();
+    var listenAddr = $('div#' + page + '-config #'+page+'-listenAddr').val();
+    var listenPort = $('div#' + page + '-config #'+page+'-listenPort').val();
+    var protoname = $('div#' + page + '-config #'+page+'-protocol').val();
     var protodetails = {};
     var sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
     var protodetails_form = $('form').serializeArray();
@@ -44,6 +44,6 @@ function _protoDetailsCommit(page) {
             content[page + "Detour"][detourIndex] = detourDetails;
         }
 
-        onContentModified();
+        _globalCommit();
     }, 75);
 }

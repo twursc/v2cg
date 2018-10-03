@@ -5,7 +5,7 @@ $('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script
 //TODO: Change to $.getScript()
 
 function _protoDetailsDisplay(page, protoname, details) {
-    //console.log("Protocol:",protoname,details);
+    console.log(page,"Protocol:",protoname,details);
     switch(protoname) {
         case "vmess": {
             $(".protodetails table#vmess_users tbody").html("");
@@ -88,7 +88,11 @@ function _protoDetailsDisplay(page, protoname, details) {
         }
 
         case "shadowsocks": {
-            let shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
+            let shadowsocks_applied_protocol = ["tcp"];
+            if(typeof details["network"] != "undefined") {
+                shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
+            }
+
 
             $('div#'+page+'-config .protodetails #shadowsocks_email').val(details["email"]);
             $('div#'+page+'-config .protodetails #shadowsocks_crypto').val(details["method"]).change();

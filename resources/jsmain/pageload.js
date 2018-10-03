@@ -9,10 +9,10 @@ function _showconn(page, tagname) {
                 v['listen'] = "0.0.0.0";
             }
             $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
-            $('div#' + page + '-config #inboundTag').val(tagname).change();
-            $('div#' + page + '-config #listenAddr').val(v['listen']);
-            $('div#' + page + '-config #listenPort').val(v['port']);
-            $('div#' + page + '-config #protocol').val("null").val(v['protocol']).change();
+            $('div#' + page + '-config #'+page+'Tag').val(tagname).change();
+            $('div#' + page + '-config #'+page+'-listenAddr').val(v['listen']);
+            $('div#' + page + '-config #'+page+'-listenPort').val(v['port']);
+            $('div#' + page + '-config #'+page+'-protocol').val("null").val(v['protocol']).change();
         }
     });
 }
@@ -34,7 +34,7 @@ function _showproto(page, protoname, tagname) {
                 }
             });
         } else {
-            container.html(i18N[clientLang]["Unknown Protocol."]);
+            container.html(i18N[clientLang]["No configurable options."]);
         }
     } else {
         container.html(i18N[clientLang]["Please select a protocol."]);
@@ -43,6 +43,6 @@ function _showproto(page, protoname, tagname) {
 
 function _formReset(page) {
     document.forms[page+'-config-form'].reset();
-    $('form#'+page+'-config-form select#protocol').val("null").change();
+    $('form#'+page+'-config-form select#'+page+'-protocol').val("null").change();
     //setTimeout(function() { document.forms[page + '-config-form'].reset(); }, 10);
 }

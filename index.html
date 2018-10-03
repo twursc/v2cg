@@ -19,7 +19,7 @@
     <div>
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation"><div style="display: inline-block; font-weight: bold; padding: 10px 15px 10px 2px;">V2CG - config.json</div></li>
+            <li role="presentation"><div style="display: inline-block; font-weight: bold; padding: 10px 15px;">V2CG</div></li>
             <li role="presentation"><a class="tabs-click" href="#inbounds" aria-controls="home" role="tab" data-toggle="tab">Inbounds</a></li>
             <li role="presentation"><a class="tabs-click" href="#outbounds" aria-controls="profile" role="tab" data-toggle="tab">Outbounds</a></li>
             <li role="presentation"><a class="tabs-click" href="#routing" aria-controls="messages" role="tab" data-toggle="tab">Routing</a></li>
@@ -31,7 +31,12 @@
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="max-width: 95%; margin: 24px auto;">
-            <!--<div role="tabpanel" class="tab-pane active" id="home">Home...</div>-->
+            <div role="tabpanel" class="tab-pane active" id="home">
+                <div class="container" style="text-align: center; padding: 64px 0; opacity: 0.75">
+                    <img src="./resources/v2ray.png">
+                    <h2>V2Ray Configuration Generator</h2>
+                </div>
+            </div>
             <div role="tabpanel" class="tab-pane" id="inbounds">
                 <h3>Inbounds</h3>
                 <p class="panedesc">Configure inbound connections, see <a target="_blank" href="https://www.v2ray.com/chapter_02/02_protocols.html">Protocols</a>.</p>
@@ -69,23 +74,23 @@
                                     </div>
 
                                     <div class="form-group" style="padding: 0 16px;">
-                                        <label for="listenAddr" class="col-sm-2 control-label">Listen Address</label>
+                                        <label for="inbound-listenAddr" class="col-sm-2 control-label">Listen Address</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="listenAddr">
+                                            <input type="text" class="form-control" id="inbound-listenAddr">
                                         </div>
                                     </div>
 
                                     <div class="form-group" style="padding: 0 16px;">
-                                        <label for="listenPort" class="col-sm-2 control-label">Port</label>
+                                        <label for="inbound-listenPort" class="col-sm-2 control-label">Port</label>
                                         <div class="col-sm-10">
-                                            <input type="number" class="form-control" id="listenPort">
+                                            <input type="number" class="form-control" id="inbound-listenPort">
                                         </div>
                                     </div>
 
                                     <div class="form-group" style="padding: 0 16px;">
-                                        <label for="protocol" class="col-sm-2 control-label">Protocol</label>
+                                        <label for="inbound-protocol" class="col-sm-2 control-label">Protocol</label>
                                         <div class="col-sm-10">
-                                            <select class="form-control" id="protocol" onchange="_showproto('inbound', this.value, $('input#inboundTag').val())">
+                                            <select class="form-control" id="inbound-protocol" onchange="_showproto('inbound', this.value, $('input#inboundTag').val())">
                                                 <option value="null">-- Select a protocol --</option>
                                                 <option value="shadowsocks">Shadowsocks</option>
                                                 <option value="socks">Socks5</option>
@@ -101,15 +106,83 @@
                                         <div class="panel-heading">Protocol Settings</div>
                                         <div class="panel-body protodetails" data-currentproto="">Please select a protocol.</div>
                                     </div>
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Transport Settings</div>
+                                        <div class="panel-body transport" data-currentproto="">No configurable options.</div>
+                                    </div>
                                 </form>
-                                <button class="btn btn-primary" id="btnSave" style="float: right;" onclick="_protoDetailsCommit('inbound');">Save current</button>
+                                <button class="btn btn-primary" id="inbound-btnSave" style="float: right;" onclick="_protoDetailsCommit('inbound');">Save current</button>
                             </div>
                         </div>
                     </div>
                 </ul>
             </div>
-            <div role="tabpanel" class="tab-pane" id="outbounds">
-                <h3>Outbounds</h3>
+            <div role="tabpanel" class="tab-pane" id="outbounds"><h3>Outbounds</h3>
+                <p class="panedesc">Configure outbound connections, see <a target="_blank" href="https://www.v2ray.com/chapter_02/02_protocols.html">Protocols</a>.</p>
+                <ul class="list-inline">
+
+                    <div class="row">
+                        <div class="col-sm-2" id="outbounds-list">
+                            <div class="conn-table-container">
+                                <table class="table table-hover">
+                                    <tbody></tbody>
+                                    <!--
+                                    <tr class="outbound-obj" data-outbound-tag="to-japan" data-outbound-primary="1">
+                                        <td class="outbound-icon"><img src="./resources/protocol-icons/vmess.png" style="width: 16px"></td>
+                                        <td class="outbound-name">to-japan</td>
+                                        <td class="outbound-operation">
+                                            <a href="#" class="opr-setprimary"><span class="glyphicon glyphicon-open" aria-hidden="true"></span></a>&nbsp;
+                                            <a href="#" class="opr-delete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>&nbsp;
+                                        </td>
+                                    </tr>-->
+                                </table>
+                                <button class="btn btn-default inlist-button" onclick="_formReset('outbound')">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-10" id="outbound-config" style="width: calc(100% - 260px);" data-outboundtag="">
+                            <div class="conn-table-container">
+                                <form class="form-horizontal" id="outbound-config-form" onsubmit="return false;">
+                                    <div class="form-group" style="padding: 0 16px;">
+                                        <label for="outboundTag" class="col-sm-2 control-label">Outbound Tag</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="outboundTag"
+                                                   onchange="$('div#outbound-config #btnSave').text(i18N[using_language]['Save current as %s'].replace(/%s/, this.value));">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="padding: 0 16px;">
+                                        <label for="outbound-protocol" class="col-sm-2 control-label">Protocol</label>
+                                        <div class="col-sm-10">
+                                            <select class="form-control" id="outbound-protocol" onchange="_showproto('outbound', this.value, $('input#outboundTag').val())">
+                                                <option value="null">-- Select a protocol --</option>
+                                                <option value="blackhole">Blackhole</option>
+                                                <option value="freedom">Freedom</option>
+                                                <option value="shadowsocks">Shadowsocks</option>
+                                                <option value="socks">Socks5</option>
+                                                <option value="vmess">VMess</option>
+                                                <option value="mtproto">Telegram MTProto</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Protocol Settings</div>
+                                        <div class="panel-body protodetails" data-currentproto="">Please select a protocol.</div>
+                                    </div>
+
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">Transport Settings</div>
+                                        <div class="panel-body transport" data-currentproto="">No configurable options.</div>
+                                    </div>
+                                </form>
+                                <button class="btn btn-primary" id="outbound-btnSave" style="float: right;" onclick="_protoDetailsCommit('outbound');">Save current</button>
+                            </div>
+                        </div>
+                    </div>
+                </ul>
             </div>
             <div role="tabpanel" class="tab-pane" id="routing">
                 <h3>Routing</h3>
@@ -125,6 +198,35 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="miscellaneous">
                 <h3>Logging</h3>
+                <p class="panedesc">Set logging level and store path for logfiles</p>
+                <form class="form-horizontal" id="logging-config-form" style="margin-bottom: 24px;" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="logging_logLevel" class="col-sm-2 control-label">Log Level</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="logging_logLevel" >
+                                <option value="none">None</option>
+                                <option value="error">Error</option>
+                                <option value="warning" selected>Warning</option>
+                                <option value="info">Info</option>
+                                <option value="debug">Debug</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="logging_accesslog" class="col-sm-2 control-label">Access Log</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="logging_accesslog">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="logging_errorlog" class="col-sm-2 control-label">Error Log</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="logging_errorlog">
+                        </div>
+                    </div>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_loggingCommit()">保存日志配置</button></p>
+                </form>
+
                 <h3>DNS</h3>
                 <h3>Statistics</h3>
             </div>
@@ -135,6 +237,7 @@
                 <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
                 <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
                 &nbsp;<button class="btn btn-default" onclick="_copyJsonContent();">&nbsp; 复制 &nbsp;</button>
+                &nbsp;<button class="btn btn-default" onclick="_jsonFormat(); this.blur();">Reformat JSON</button>
             </div>
         </div>
     </div>
@@ -421,6 +524,51 @@
             </div>
         </div>
     </div>
+
+    <div class="proto_tmpl_outbound" id="blackhole">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Options</label>
+            <div class="col-sm-5">
+                <p class="form-control-static">
+                    <label style="font-weight: normal;">
+                        <input type="checkbox" id="blackhole_return403" name="blackhole_return403">
+                        <span>Return a HTTP 403 response before closing connection</span>
+                    </label>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="proto_tmpl_outbound" id="freedom">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">DNS Resolve Strategy</label>
+            <div class="col-sm-10">
+                <select class="form-control" id="freedom_domainStrategy" name="freedom_domainStrategy">
+                    <option value="AsIs">AsIs - Resolve by system</option>
+                    <option value="UseIP">UseIP - Resolve by internal DNS server first, then send the request out.</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="freedom_timeout" class="col-sm-2 control-label">Timeout</label>
+            <div class="col-sm-10">
+                <div class="input-group">
+                    <input type="number" class="form-control" id="freedom_timeout" name="freedom_timeout" value="300">
+                    <div class="input-group-addon">second(s)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="freedom_redirect" class="col-sm-2 control-label">Redirect target</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" id="freedom_redirect" name="freedom_redirect">
+                <span>Send all traffic to the specified <code>server:port</code>, specify only port won't change the original destination address, specify address with port 0 will not change the original destination port.</span>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 </body>
@@ -433,6 +581,7 @@
 <script src="./resources/jsmain/pageload.js"></script>
 <script src="./resources/jsmain/protocol-cust.js"></script>
 <script src="./resources/jsmain/protocol-commit.js"></script>
+<script src="./resources/jsmain/config-misc.js"></script>
 
 <script>
     content = [];
