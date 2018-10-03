@@ -21,14 +21,32 @@ function _vmessAddUser() {
 
 function _vmessGetUsers(form) {
     console.log("vmessGetUsers: ", form);
+    var vmessClients = [];
     var formKeys = Object.keys(form);
-    for (var i=0;i<formKeys.length;i++)
-    {
+
+    for (var i = 0; i < formKeys.length; i++) {
         var formKey = Object.keys(form)[i];
         var formVal = form[formKey];
-
-
+        if (formKey.substr(0, 17) == "vmessclient_uuid_") {
+            var lf = formKey.split('_');
+            if (typeof form["vmessclient_email_" + lf[2]] != undefined &&
+                typeof form["vmessclient_level_" + lf[2]] != undefined &&
+                typeof form["vmessclient_alterid_" + lf[2]] != undefined) {
+                var vEmail = form["vmessclient_email_" + lf[2]];
+                var vLevel = form["vmessclient_level_" + lf[2]];
+                var vAlterID = form["vmessclient_alterid_" + lf[2]];
+                if (vEmail.length > 0 && formVal.length > 0 && !isNaN(parseInt(vLevel)) && !isNaN(parseInt(vAlterID))) {
+                    vmessClients.push({
+                        "email": vEmail,
+                        "id": formVal,
+                        "level": vLevel,
+                        "alterId": vAlterID
+                    });
+                }
+            }
+        }
     }
+    return vmessClients;
 }
 
 function _vmessRemoveUser(obj) {

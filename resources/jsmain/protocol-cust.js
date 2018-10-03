@@ -7,12 +7,32 @@ $('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script
 function _protoDetailsDisplay(page, protoname, details) {
     //console.log("Protocol:",protoname,details);
     switch(protoname) {
-        case "socks": {
+        case "vmess": {
+            $(".protodetails table#vmess_users tbody").html("");
+            Object.keys(details["clients"]).forEach(function(k) {
+                let info = details["clients"][k];
+                let newrow = _vmessAddUser();
+                $(".protodetails table#vmess_users tbody tr.vmess_client input[name=vmessclient_email_"+newrow+"]").val(info["email"]);
+                $(".protodetails table#vmess_users tbody tr.vmess_client input[name=vmessclient_uuid_"+newrow+"]").val(info["id"]);
+                $(".protodetails table#vmess_users tbody tr.vmess_client input[name=vmessclient_level_"+newrow+"]").val(info["level"]);
+                $(".protodetails table#vmess_users tbody tr.vmess_client input[name=vmessclient_alterid_"+newrow+"]").val(info["alterId"]);
+            });
+            $('div#'+page+'-config .protodetails #vmess_default_level').val(parseInt(details["default"]["level"]));
+            $('div#'+page+'-config .protodetails #vmess_default_alterid').val(parseInt(details["default"]["alterId"]));
+            $('div#'+page+'-config .protodetails #vmess_disableInsecureEncryption')[0].checked = details["disableInsecureEncryption"];
+            if(typeof details["detour"] != "undefined") {
+                if(details["detour"]["to"].length > 0) {
+                    $('div#'+page+'-config .protodetails #vmess_detourto').val(details["detour"]["to"]);
+                }
+            }
+            break;
+        }
 
+        case "socks": {
             $(".protodetails table#socksauth_users tbody").html("");
             Object.keys(details["accounts"]).forEach(function(k) {
-                var info = details["accounts"][k];
-                var newrow = socksAuth_addUser();
+                let info = details["accounts"][k];
+                let newrow = socksAuth_addUser();
                 $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authuser_"+newrow+"]").val(info["user"]);
                 $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authpass_"+newrow+"]").val(info["pass"]);
             });
@@ -25,11 +45,10 @@ function _protoDetailsDisplay(page, protoname, details) {
         }
 
         case "http": {
-
             $(".protodetails table#httpauth_users tbody").html("");
             Object.keys(details["accounts"]).forEach(function(k) {
-                var info = details["accounts"][k];
-                var newrow = httpAuth_addUser();
+                let info = details["accounts"][k];
+                let newrow = httpAuth_addUser();
                 $(".protodetails table#httpauth_users tbody tr.http_authuser_item input[name=http_authuser_"+newrow+"]").val(info["user"]);
                 $(".protodetails table#httpauth_users tbody tr.http_authuser_item input[name=http_authpass_"+newrow+"]").val(info["pass"]);
             });
@@ -48,7 +67,7 @@ function _protoDetailsDisplay(page, protoname, details) {
 
         case "dokodemo-door": {
             if(parseInt(details["timeout"]) == 0) { details["timeout"] = 300; }
-            var dokodemo_applied_protocol = details["network"].toLowerCase().split(',');
+            let dokodemo_applied_protocol = details["network"].toLowerCase().split(',');
 
             $('div#'+page+'-config .protodetails #dokodemo_destaddr').val(details["address"]);
             $('div#'+page+'-config .protodetails #dokodemo_destport').val(parseInt(details["port"]));
@@ -69,7 +88,7 @@ function _protoDetailsDisplay(page, protoname, details) {
         }
 
         case "shadowsocks": {
-            var shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
+            let shadowsocks_applied_protocol = details["network"].toLowerCase().split(',');
 
             $('div#'+page+'-config .protodetails #shadowsocks_email').val(details["email"]);
             $('div#'+page+'-config .protodetails #shadowsocks_crypto').val(details["method"]).change();
@@ -94,18 +113,28 @@ function _protoDetailsParse(page, protoname, form) {
     console.log("_protoDetailsParse: ", page, protoname, form);
     switch(protoname) {
         case "vmess": {
-            var vmessClients = [];
-            _vmessGetUsers(form);
-            console.log("vmessClients:", vmessClients);
-            return { }
+            let retval = {
+                "clients": _vmessGetUsers(form),
+                "default": {
+                    "level": form["vmess_default_level"],
+                    "alterId": form["vmess_default_alterid"]
+                },
+                "disableInsecureEncryption": $("div#" + page + "-config #vmess_disableInsecureEncryption")[0].checked
+            };
+            if(form["vmess_detourto"].length > 0) {
+                retval["detour"] = {
+                    "to": form["vmess_detourto"]
+                }
+            }
+            return retval;
         }
 
         case "socks": {
-            var authtype = "noauth";
-            var socksAccounts = socksAuth_parseUsers(form);
+            let authtype = "noauth";
+            let socksAccounts = socksAuth_parseUsers(form);
             /*Object.keys(form).forEach(function(k) {
                 if(k.substr(0,15) == "socks_authpass_") {
-                    var lf = k.split('_');
+                    let lf = k.split('_');
                     if(typeof form["socks_authuser_"+lf[2]] != undefined) {
                         if(form["socks_authuser_"+lf[2]].length > 0 && form[k] > 0) {
                             socksAccounts.push({
@@ -131,10 +160,10 @@ function _protoDetailsParse(page, protoname, form) {
         }
 
         case "http": {
-            var httpauthAccounts = httpAuth_parseUsers(form);
+            let httpauthAccounts = httpAuth_parseUsers(form);
             /*Object.keys(form).forEach(function(k) {
                 if(k.substr(0,14) == "http_authpass_") {
-                    var lf = k.split('_');
+                    let lf = k.split('_');
                     if(typeof form["http_authuser_"+lf[2]] != undefined) {
                         if(form["http_authuser_"+lf[2]].length > 0 && form[k] > 0) {
                             httpauthAccounts.push({
@@ -167,7 +196,7 @@ function _protoDetailsParse(page, protoname, form) {
         }
 
         case "dokodemo-door": {
-            var protocol_types = [];
+            let protocol_types = [];
             if($("div#"+page+"-config #dokodemo_network_tcp")[0].checked) { protocol_types.push("tcp"); }
             if($("div#"+page+"-config #dokodemo_network_udp")[0].checked) { protocol_types.push("udp"); }
             return {
@@ -181,7 +210,7 @@ function _protoDetailsParse(page, protoname, form) {
         }
 
         case "shadowsocks": {
-            var protocol_types = [];
+            let protocol_types = [];
             if($("div#"+page+"-config #shadowsocks_network_tcp")[0].checked) { protocol_types.push("tcp"); }
             if($("div#"+page+"-config #shadowsocks_network_udp")[0].checked) { protocol_types.push("udp"); }
             return {
