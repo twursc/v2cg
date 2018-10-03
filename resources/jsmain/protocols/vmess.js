@@ -20,7 +20,15 @@ function _vmessAddUser() {
 }
 
 function _vmessGetUsers(form) {
-    console.log(form)
+    console.log("vmessGetUsers: ", form);
+    var formKeys = Object.keys(form);
+    for (var i=0;i<formKeys.length;i++)
+    {
+        var formKey = Object.keys(form)[i];
+        var formVal = form[formKey];
+
+
+    }
 }
 
 function _vmessRemoveUser(obj) {

@@ -63,6 +63,24 @@ function _parseJson(jsoncontent) {
     });
 }
 
+function _parsePageUI() {
+    $('ul.nav-tabs a.tabs-click:first').click();
+    Object.keys(document.forms).forEach(function(k) {
+        document.forms[k].reset();
+    });
+    $("ul.nav.nav-tabs a.tabs-click").click(function() {
+        this.blur();
+    });
+    document.body.onselectstart = document.body.ondragstart = function(e) {
+        return false;
+        /*if(e.srcElement.nodeName == "#text") {
+            return false;
+        } else {
+            console.log("selectstart elem: " + e.srcElement);
+        }*/
+    }
+}
+
 function _copyJsonContent() {
     $('textarea.jsonContent').focus().select();
     document.execCommand("copy");

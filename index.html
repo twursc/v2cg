@@ -442,10 +442,7 @@
     window.onload = function () {
         _applyI18N();
         _parseJson($('textarea.jsonContent').val());
-        $('ul.nav-tabs a.tabs-click:first').click();
-        Object.keys(document.forms).forEach(function(k) {
-            document.forms[k].reset();
-        });
+        _parsePageUI();
     };
 </script>
 
