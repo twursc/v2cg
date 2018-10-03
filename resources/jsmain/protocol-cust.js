@@ -94,19 +94,7 @@ function _protoDetailsParse(page, protoname, form) {
     switch(protoname) {
         case "vmess": {
             var vmessClients = [];
-            Object.keys(form).forEach(function(k) {
-                if(k.substr(0,14) == "http_authpass_") {
-                    var lf = k.split('_');
-                    if(typeof form["http_authuser_"+lf[2]] != undefined) {
-                        if(form["http_authuser_"+lf[2]].length > 0 && form[k] > 0) {
-                            httpauthAccounts.push({
-                                "user": form["http_authuser_"+lf[2]],
-                                "pass": form[k]
-                            });
-                        }
-                    }
-                } //TODO: Bugfix - synchronized process
-            });
+            _vmessGetUsers(form);
             console.log("vmessClients:", vmessClients);
             return { }
         }
