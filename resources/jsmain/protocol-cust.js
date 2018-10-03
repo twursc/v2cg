@@ -2,6 +2,7 @@ $('body').append('<script src="./resources/jsmain/protocols/mtproto.js"></script
     .append('<script src="./resources/jsmain/protocols/http.js"></script>')
     .append('<script src="./resources/jsmain/protocols/shadowsocks.js"></script>')
     .append('<script src="./resources/jsmain/protocols/vmess.js"></script>');
+//TODO: Change to $.getScript()
 
 function _protoDetailsDisplay(page, protoname, details) {
     //console.log("Protocol:",protoname,details);
@@ -101,8 +102,8 @@ function _protoDetailsParse(page, protoname, form) {
 
         case "socks": {
             var authtype = "noauth";
-            var socksAccounts = [];
-            Object.keys(form).forEach(function(k) {
+            var socksAccounts = socksAuth_parseUsers(form);
+            /*Object.keys(form).forEach(function(k) {
                 if(k.substr(0,15) == "socks_authpass_") {
                     var lf = k.split('_');
                     if(typeof form["socks_authuser_"+lf[2]] != undefined) {
@@ -114,7 +115,7 @@ function _protoDetailsParse(page, protoname, form) {
                         }
                     }
                 } //TODO: Bugfix - synchronized process
-            });
+            });*/
             console.log("socksAccounts:", socksAccounts);
             if($("div#" + page + "-config #socks_enableauth")[0].checked) {
                 authtype = "password";
@@ -130,8 +131,8 @@ function _protoDetailsParse(page, protoname, form) {
         }
 
         case "http": {
-            var httpauthAccounts = [];
-            Object.keys(form).forEach(function(k) {
+            var httpauthAccounts = httpAuth_parseUsers(form);
+            /*Object.keys(form).forEach(function(k) {
                 if(k.substr(0,14) == "http_authpass_") {
                     var lf = k.split('_');
                     if(typeof form["http_authuser_"+lf[2]] != undefined) {
@@ -143,7 +144,7 @@ function _protoDetailsParse(page, protoname, form) {
                         }
                     }
                 } //TODO: Bugfix - synchronized process
-            });
+            });*/
             console.log("httpauthAccounts:", httpauthAccounts);
             return {
                 "accounts": httpauthAccounts,

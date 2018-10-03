@@ -20,6 +20,28 @@ function httpAuth_removeUser(obj) {
     obj.disabled = true;
 }
 
+function httpAuth_parseUsers(form) {
+    var httpauthAccounts = [];
+    var formKeys = Object.keys(form);
+
+    for (var i = 0; i < formKeys.length; i++) {
+        var formKey = Object.keys(form)[i];
+        var formVal = form[formKey];
+        if (formKey.substr(0, 14) == "http_authpass_") {
+            var lf = formKey.split('_');
+            if (typeof form["http_authuser_" + lf[2]] != undefined) {
+                if (form["http_authuser_" + lf[2]].length > 0 && form[formKey].length > 0) {
+                    httpauthAccounts.push({
+                        "user": form["http_authuser_" + lf[2]],
+                        "pass": form[formKey]
+                    });
+                }
+            }
+        }
+    }
+    return httpauthAccounts;
+}
+
 function socksAuth_addUser() {
     var count = $(".protodetails table#socksauth_users tbody .socks_authuser_item").length;
     var tmpl = "<tr class=\"socks_authuser_item\"><td><input class=\"form-control input-sm\" placeholder=\"" + i18N[using_language]["Username"] + "\" type=\"text\" name=\"socks_authuser_" + count + "\"></td>\n" +
@@ -39,4 +61,26 @@ function socksAuth_removeUser(obj) {
     thePass.disabled = true;
     thePass.value = "";
     obj.disabled = true;
+}
+
+function socksAuth_parseUsers(form) {
+    var socksAccounts = [];
+    var formKeys = Object.keys(form);
+
+    for (var i = 0; i < formKeys.length; i++) {
+        var formKey = Object.keys(form)[i];
+        var formVal = form[formKey];
+        if (formKey.substr(0, 15) == "socks_authpass_") {
+            var lf = formKey.split('_');
+            if (typeof form["socks_authuser_" + lf[2]] != undefined) {
+                if (form["socks_authuser_" + lf[2]].length > 0 && form[formKey].length > 0) {
+                    socksAccounts.push({
+                        "user": form["socks_authuser_" + lf[2]],
+                        "pass": form[formKey]
+                    });
+                }
+            }
+        }
+    }
+    return socksAccounts;
 }

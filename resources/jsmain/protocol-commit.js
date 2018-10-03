@@ -6,7 +6,7 @@ function _protoDetailsCommit(page) {
     var listenAddr = $('div#' + page + '-config #listenAddr').val();
     var listenPort = $('div#' + page + '-config #listenPort').val();
     var protoname = $('div#' + page + '-config #protocol').val();
-    var protodetails = [];
+    var protodetails = {};
     var sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
     var protodetails_form = $('form').serializeArray();
 
