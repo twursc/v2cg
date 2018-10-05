@@ -74,5 +74,9 @@ i18N["zh-CN"] = {
     "OTA takes no effect while AEAD ciphers selected.": "选择 AEAD 加密时，一次性认证不起作用。",
     "V2Ray as a socks5 client will only try to authenticate while both user and password fields are not empty.": "V2Ray 作为 Socks5 客户端，在该服务器用户名和密码都不为空时会进行认证。",
     "Add VNext": "添加 VMess 服务器",
-    "Send Through": "传出源地址"
+    "Send Through": "传出源地址",
+    "Set API connection tag and which API should be enabled, see <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/api.html\">API</a> .": "设置 API 的传出代理标识，以及需要开启哪些 API。参见 <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/api.html\">API 配置</a> 。",
+    "API Outbound Tag": "传出代理标识",
+    "Enabled APIs": "使能的 API"
+
 };

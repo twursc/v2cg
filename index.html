@@ -25,7 +25,7 @@
             <li role="presentation"><a class="tabs-click" accesskey="3" href="#routing" aria-controls="messages" role="tab" data-toggle="tab">Routing</a></li>
             <li role="presentation"><a class="tabs-click" accesskey="4" href="#transport" aria-controls="settings" role="tab" data-toggle="tab">Transports (Global)</a></li>
             <li role="presentation"><a class="tabs-click" accesskey="5" href="#policy" aria-controls="settings" role="tab" data-toggle="tab">Policy</a></li>
-            <li role="presentation"><a class="tabs-click" accesskey="6" href="#api" aria-controls="settings" role="tab" data-toggle="tab">API</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="6" href="#dns" aria-controls="settings" role="tab" data-toggle="tab">DNS</a></li>
             <li role="presentation"><a class="tabs-click" accesskey="7" href="#miscellaneous" aria-controls="settings" role="tab" data-toggle="tab">Miscellaneous</a></li>
             <li role="presentation" style="float: right;"><a class="tabs-click" accesskey="0" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab"><b>{JSON}</b></a></li>
         </ul>
@@ -213,8 +213,8 @@
             <div role="tabpanel" class="tab-pane" id="policy">
                 <h3>Policy</h3>
             </div>
-            <div role="tabpanel" class="tab-pane" id="api">
-                <h3>API</h3>
+            <div role="tabpanel" class="tab-pane" id="dns">
+                <h3>DNS</h3>
             </div>
             <div role="tabpanel" class="tab-pane" id="miscellaneous">
                 <h3>Logging</h3>
@@ -247,7 +247,28 @@
                     <p style="text-align: right"><button class="btn btn-primary" onclick="_loggingCommit()">保存日志配置</button></p>
                 </form>
 
-                <h3>DNS</h3>
+                <h3>API</h3>
+                <p class="panedesc">Set API connection tag and which API should be enabled, see <a target="_blank" href="https://www.v2ray.com/chapter_02/api.html">API</a> .</p>
+                <form class="form-horizontal" id="api-config-form" style="margin-bottom: 24px;" onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="api_conntag" class="col-sm-2 control-label">API Outbound Tag</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="api_conntag">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Enabled APIs</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">
+                                <label style="font-weight: normal;"><input type="checkbox" id="api_service_handler" name="api_service_handler"> HandlerService</label> &nbsp;
+                                <label style="font-weight: normal;"><input type="checkbox" id="api_service_logger" name="api_service_logger"> LoggerService</label> &nbsp;
+                                <label style="font-weight: normal;"><input type="checkbox" id="api_service_stats" name="api_service_stats"> StatsService</label> &nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_loggingCommit()">保存日志配置</button></p>
+                </form>
+
                 <h3>Statistics</h3>
             </div>
 

@@ -13,7 +13,7 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbound", "outbound", "routing", "dns", "stats", "transport", "policy"];
+    let pkeys = ["log", "inbound", "outbound", "routing", "stats", "transport", "policy"];
     for (var p = 0; p <= pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
