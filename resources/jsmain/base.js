@@ -1,5 +1,6 @@
 
 function _parseJson(jsoncontent) {
+
     if (jsoncontent.length == 0) {
         jsoncontent = "{}";
     }
@@ -10,6 +11,15 @@ function _parseJson(jsoncontent) {
         alert(e);
         console.error(e);
     }
+
+
+    let pkeys = ["log", "inbound", "outbound", "routing", "dns", "stats", "transport", "policy"];
+    for (var p = 0; p <= pkeys.length; p++) {
+        if (typeof content[pkeys[p]] != "object") {
+            content[pkeys[p]] = {};
+        }
+    }
+
     if (typeof content["inbound"] != "undefined") {
         if (typeof content["inbound"].tag == "undefined") {
             content["inbound"].tag = "default";
@@ -44,54 +54,18 @@ function _parseJson(jsoncontent) {
             }
         }
     }
-
-    // Fill inbound list
-    $('div#inbounds-list .conn-table-container table > tbody').html("");
-    Object.keys(content["inboundDetour"]).forEach(function(k) {
-        let theInbound = content["inboundDetour"][k];
-        let tmpl = "\n" +
-            "<tr class=\"inbound-obj\" data-inbound-tag=\"" + theInbound["tag"] + "\" data-inbound-primary=\"\" " +
-            "   onclick=\"_showconn('inbound', '" + theInbound["tag"] + "')\">\n" +
-            "    <td class=\"inbound-icon\"><img src=\"./resources/protocol-icons/" + theInbound["protocol"] + ".png\" style=\"width: 16px\"></td>\n" +
-            "    <td class=\"inbound-name\">" + theInbound["tag"] + "</td>\n" +
-            "    <td class=\"inbound-operation\">\n" +
-            "        <a href=\"#\" class=\"opr-setprimary\" onclick=\"_setDefaultDetour('inbound', '" + theInbound["tag"] + "')\"><span class=\"glyphicon glyphicon-open\" aria-hidden=\"true\"></span></a>&nbsp;\n" +
-            "        <a href=\"#\" class=\"opr-delete\" onclick=\"_removeDetour('inbound', '" + theInbound["tag"] + "')\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></a>&nbsp;\n" +
-            "    </td>\n" +
-            "</tr>";
-        $('div#inbounds-list .conn-table-container table > tbody').append(tmpl);
-    });
-
-    // Fill outbound list
-    $('div#outbounds-list .conn-table-container table > tbody').html("");
-    Object.keys(content["outboundDetour"]).forEach(function(k) {
-        let theOutbound = content["outboundDetour"][k];
-        let tmpl = "\n" +
-            "<tr class=\"outbound-obj\" data-oOutbound-tag=\"" + theOutbound["tag"] + "\" data-outbound-primary=\"\" " +
-            "   onclick=\"_showconn('outbound', '" + theOutbound["tag"] + "')\">\n" +
-            "    <td class=\"outbound-icon\"><img src=\"./resources/protocol-icons/" + theOutbound["protocol"] + ".png\" style=\"width: 16px\"></td>\n" +
-            "    <td class=\"outbound-name\">" + theOutbound["tag"] + "</td>\n" +
-            "    <td class=\"outbound-operation\">\n" +
-            "        <a href=\"#\" class=\"opr-setprimary\" onclick=\"_setDefaultDetour('outbound', '" + theOutbound["tag"] + "')\"><span class=\"glyphicon glyphicon-open\" aria-hidden=\"true\"></span></a>&nbsp;\n" +
-            "        <a href=\"#\" class=\"opr-delete\" onclick=\"_removeDetour('outbound', '" + theOutbound["tag"] + "')\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></a>&nbsp;\n" +
-            "    </td>\n" +
-            "</tr>";
-        $('div#outbounds-list .conn-table-container table > tbody').append(tmpl);
-    });
-
-    // Fill logging form
-    setTimeout(function() {
-        if(typeof content["log"] == "object") {
-            $('select#logging_logLevel').val(content["log"]["loglevel"]);
-            $('input#logging_accesslog').val(content["log"]["access"]).attr("placeholder", i18N[using_language]["Unset - Print to standard output"]);
-            $('input#logging_errorlog').val(content["log"]["error"]).attr("placeholder", i18N[using_language]["Unset - Print to standard output"]);
-        }
-    }, 10);
-
+    _applyContents();
 }
 
 function _parsePageUI() {
     //$('ul.nav-tabs a.tabs-click:first').click();
+    $.get("prototmpl.html").done(function(data) {
+        $('div.proto_tmpl_container').html(data);
+    }).error(function(data) {
+        alert("Failed to load protocol templates, terminating...");
+        document.clear();
+    });
+
     Object.keys(document.forms).forEach(function(k) {
         document.forms[k].reset();
     });
