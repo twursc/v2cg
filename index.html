@@ -20,14 +20,14 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation"><div style="display: inline-block; font-weight: bold; padding: 10px 15px;">V2CG</div></li>
-            <li role="presentation"><a class="tabs-click" href="#inbounds" aria-controls="home" role="tab" data-toggle="tab">Inbounds</a></li>
-            <li role="presentation"><a class="tabs-click" href="#outbounds" aria-controls="profile" role="tab" data-toggle="tab">Outbounds</a></li>
-            <li role="presentation"><a class="tabs-click" href="#routing" aria-controls="messages" role="tab" data-toggle="tab">Routing</a></li>
-            <li role="presentation"><a class="tabs-click" href="#transport" aria-controls="settings" role="tab" data-toggle="tab">Transports (Global)</a></li>
-            <li role="presentation"><a class="tabs-click" href="#policy" aria-controls="settings" role="tab" data-toggle="tab">Policy</a></li>
-            <li role="presentation"><a class="tabs-click" href="#api" aria-controls="settings" role="tab" data-toggle="tab">API</a></li>
-            <li role="presentation"><a class="tabs-click" href="#miscellaneous" aria-controls="settings" role="tab" data-toggle="tab">Miscellaneous</a></li>
-            <li role="presentation" style="float: right;"><a class="tabs-click" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab"><b>{JSON}</b></a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="1" href="#inbounds" aria-controls="home" role="tab" data-toggle="tab">Inbounds</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="2" href="#outbounds" aria-controls="profile" role="tab" data-toggle="tab">Outbounds</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="3" href="#routing" aria-controls="messages" role="tab" data-toggle="tab">Routing</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="4" href="#transport" aria-controls="settings" role="tab" data-toggle="tab">Transports (Global)</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="5" href="#policy" aria-controls="settings" role="tab" data-toggle="tab">Policy</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="6" href="#api" aria-controls="settings" role="tab" data-toggle="tab">API</a></li>
+            <li role="presentation"><a class="tabs-click" accesskey="7" href="#miscellaneous" aria-controls="settings" role="tab" data-toggle="tab">Miscellaneous</a></li>
+            <li role="presentation" style="float: right;"><a class="tabs-click" accesskey="0" href="#jsoncontent" aria-controls="jsoncontent" role="tab" data-toggle="tab"><b>{JSON}</b></a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content" style="max-width: 95%; margin: 24px auto;">
@@ -47,8 +47,7 @@
                             <div class="conn-table-container">
                                 <table class="table table-hover">
                                     <tbody></tbody>
-                                    <!--
-                                    <tr class="inbound-obj" data-inbound-tag="to-japan" data-inbound-primary="1">
+                                    <!--<tr class="inbound-obj" data-inbound-tag="to-japan" data-inbound-primary="1">
                                         <td class="inbound-icon"><img src="./resources/protocol-icons/vmess.png" style="width: 16px"></td>
                                         <td class="inbound-name">to-japan</td>
                                         <td class="inbound-operation">
@@ -109,7 +108,21 @@
 
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Transport Settings</div>
-                                        <div class="panel-body transport" data-currentproto="">No configurable options.</div>
+                                        <div class="panel-body transport" data-currentproto="">
+
+                                            <div class="form-group" style="padding: 0 16px;">
+                                                <label for="inbound-transport" class="col-sm-2 control-label">Protocol</label>
+                                                <div class="col-sm-10">
+                                                    <select class="form-control" id="inbound-transport" onchange="_showtransport('inbound', this.value, $('input#inboundTag').val())">
+                                                        <option value="tcp">TCP</option>
+                                                        <option value="kcp">mKCP</option>
+                                                        <option value="ws">WebSocket</option>
+                                                        <option value="http">HTTP/2</option>
+                                                        <option value="domainsocket">Domain Socket</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </form>
                                 <button class="btn btn-primary" id="inbound-btnSave" style="float: right;" onclick="_protoDetailsCommit('inbound');">Save current</button>
@@ -150,6 +163,13 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="outboundTag"
                                                    onchange="$('div#outbound-config #btnSave').text(i18N[using_language]['Save current as %s'].replace(/%s/, this.value));">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="padding: 0 16px;">
+                                        <label for="outbound-sendThrough" class="col-sm-2 control-label">Send Through</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" id="outbound-sendThrough" value="0.0.0.0">
                                         </div>
                                     </div>
 
@@ -244,7 +264,7 @@
 </div>
 
 <div class="proto_tmpl_container" style="display: none">
-    <div class="proto_tmpl_inbound" id="vmess">
+    <div class="proto_tmpl_inbound" id="i-vmess">
 
         <div class="form-group">
             <label class="col-sm-2 control-label">Accounts</label>
@@ -292,7 +312,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_inbound" id="socks">
+    <div class="proto_tmpl_inbound" id="i-socks">
         <div class="form-group">
             <label class="col-sm-2 control-label">Authentication</label>
             <div class="col-sm-10">
@@ -345,7 +365,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_inbound" id="http">
+    <div class="proto_tmpl_inbound" id="i-http">
         <div class="form-group">
             <label class="col-sm-2 control-label">Accounts</label>
             <div class="col-sm-10">
@@ -388,7 +408,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_inbound" id="shadowsocks">
+    <div class="proto_tmpl_inbound" id="i-shadowsocks">
         <div class="form-group">
             <label for="shadowsocks_email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -445,7 +465,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_inbound" id="dokodemo-door">
+    <div class="proto_tmpl_inbound" id="i-dokodemo-door">
         <div class="form-group">
             <label for="dokodemo_destaddr" class="col-sm-2 control-label">Destination Address</label>
             <div class="col-sm-10">
@@ -498,7 +518,7 @@
 
     </div>
 
-    <div class="proto_tmpl_inbound" id="mtproto">
+    <div class="proto_tmpl_inbound" id="i-mtproto">
         <div class="form-group">
             <label for="mtproto_email" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -525,7 +545,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_outbound" id="blackhole">
+    <div class="proto_tmpl_outbound" id="o-blackhole">
         <div class="form-group">
             <label class="col-sm-2 control-label">Options</label>
             <div class="col-sm-5">
@@ -539,7 +559,7 @@
         </div>
     </div>
 
-    <div class="proto_tmpl_outbound" id="freedom">
+    <div class="proto_tmpl_outbound" id="o-freedom">
         <div class="form-group">
             <label class="col-sm-2 control-label">DNS Resolve Strategy</label>
             <div class="col-sm-10">
@@ -563,12 +583,67 @@
         <div class="form-group">
             <label for="freedom_redirect" class="col-sm-2 control-label">Redirect target</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="freedom_redirect" name="freedom_redirect">
+                <input type="text" class="form-control" id="freedom_redirect" name="freedom_redirect">
                 <span>Send all traffic to the specified <code>server:port</code>, specify only port won't change the original destination address, specify address with port 0 will not change the original destination port.</span>
             </div>
         </div>
-
     </div>
+
+
+    <div class="proto_tmpl_outbound" id="o-shadowsocks">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Remote Servers</label>
+            <div class="col-sm-10">
+                <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                    <table class="table table-condensed" id="shadowsocks_remotes" style="margin: 0 !important;">
+                        <thead style="display: none;"><tr><td>Server</td><td>Port</td><td>Crypto</td><td>Email</td><td>Password</td><td>OTA</td><td>Level</td><td>&nbsp;</td></tr></thead>
+                        <tbody></tbody>
+                        <tfoot><tr><td colspan="8"><button class="btn btn-default btn-sm" onclick="shadowsocks_addRemote();">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Remote Server</span></button></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <span><font style="color: red">*</font> <span>OTA takes no effect while AEAD ciphers selected.</span></span>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="proto_tmpl_outbound" id="o-socks">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Remote Servers</label>
+            <div class="col-sm-10">
+                <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                    <table class="table table-condensed" id="socks_remotes" style="margin: 0 !important;">
+                        <thead style="display: none;"><tr><td>Server</td><td>Port</td><td>Email</td><td>Password</td><td>Level</td><td>&nbsp;</td></tr></thead>
+                        <tbody></tbody>
+                        <tfoot><tr><td colspan="8"><button class="btn btn-default btn-sm" onclick="socksClient_addRemote();">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Remote Server</span></button></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <span><font style="color: red">*</font> <span>V2Ray as a socks5 client will only try to authenticate while both user and password fields are not empty.</span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="proto_tmpl_outbound" id="o-vmess">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">VNexts</label>
+            <div class="col-sm-10">
+                <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                    <table class="table table-condensed" id="vmess_vnexts" style="margin: 0 !important;">
+                        <thead style="display: none;"><tr><td>Server</td><td>Port</td><td>UUID</td><td>Alter ID</td><td>Level</td><td>&nbsp;</td></tr></thead>
+                        <tbody></tbody>
+                        <tfoot><tr><td colspan="8"><button class="btn btn-default btn-sm" onclick="_vmessAddVNext();">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add VNext</span></button></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 </body>

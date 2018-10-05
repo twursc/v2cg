@@ -5,23 +5,32 @@ function _showconn(page, tagname) {
     Object.keys(content[page + "Detour"]).forEach(function (v) {
         v = content[page + "Detour"][v];
         if (v.tag == tagname) {
-            if (typeof v['listen'] == "undefined") {
-                v['listen'] = "0.0.0.0";
+            if(page == "inbound") {
+                if (typeof v['listen'] == "undefined") {
+                    v['listen'] = "0.0.0.0";
+                }
+                $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
+                $('div#' + page + '-config #' + page + 'Tag').val(tagname).change();
+                $('div#' + page + '-config #' + page + '-listenAddr').val(v['listen']);
+                $('div#' + page + '-config #' + page + '-listenPort').val(v['port']);
+                $('div#' + page + '-config #' + page + '-protocol').val("null").val(v['protocol']).change();
             }
-            $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
-            $('div#' + page + '-config #'+page+'Tag').val(tagname).change();
-            $('div#' + page + '-config #'+page+'-listenAddr').val(v['listen']);
-            $('div#' + page + '-config #'+page+'-listenPort').val(v['port']);
-            $('div#' + page + '-config #'+page+'-protocol').val("null").val(v['protocol']).change();
+            if(page == "outbound") {
+                $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
+                $('div#' + page + '-config #' + page + 'Tag').val(tagname).change();
+                $('div#' + page + '-config #' + page + '-sendThrough').val(v['sendThrough']);
+                $('div#' + page + '-config #' + page + '-protocol').val("null").val(v['protocol']).change();
+            }
         }
     });
 }
 
 function _showproto(page, protoname, tagname) {
 
-    var container = $('div#' + page + '-config div.panel-body.protodetails');
+    let container = $('div#' + page + '-config div.panel-body.protodetails');
     if(protoname.length != 0 && protoname != "null") {
-        var tmpl = $('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + protoname);
+        let tmpl = $('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + page.substr(0,1) + "-" + protoname);
+        console.log('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + page.substr(0,1) + "-" + protoname);
         if (tmpl.length == 1) {
             container.html(tmpl.html());
             Object.keys(content[page+"Detour"]).forEach(function(v) {
@@ -39,6 +48,10 @@ function _showproto(page, protoname, tagname) {
     } else {
         container.html(i18N[clientLang]["Please select a protocol."]);
     }
+}
+
+function _showtransport(page, transport, tagname) {
+    //TODO: Show transport
 }
 
 function _formReset(page) {

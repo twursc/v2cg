@@ -67,5 +67,12 @@ i18N["zh-CN"] = {
     "AsIs - Resolve by system": "AsIs - 交由系统进行解析",
     "UseIP - Resolve by internal DNS server first, then send the request out.": "UseIP - 由 V2Ray 配置的 DNS 服务器解析为 IP 再发送请求",
     "Redirect target": "将流量转发到",
-    "Send all traffic to the specified <code>server:port</code>, specify only port won't change the original destination address, specify address with port 0 will not change the original destination port.": "将所有流量转发到指定的 <code>地址:端口</code>, 只指定端口 （如 <code>:443</code>） 不会修改原有的目标地址, 指定端口为 0 则不会修改原有的目标端口"
+    "Send all traffic to the specified <code>server:port</code>, specify only port won't change the original destination address, specify address with port 0 will not change the original destination port.": "将所有流量转发到指定的 <code>地址:端口</code>, 只指定端口 （如 <code>:443</code>） 不会修改原有的目标地址, 指定端口为 0 则不会修改原有的目标端口",
+    "Remote Servers": "远程服务器",
+    "Server": "服务器",
+    "Add Remote Server": "添加远程服务器",
+    "OTA takes no effect while AEAD ciphers selected.": "选择 AEAD 加密时，一次性认证不起作用。",
+    "V2Ray as a socks5 client will only try to authenticate while both user and password fields are not empty.": "V2Ray 作为 Socks5 客户端，在该服务器用户名和密码都不为空时会进行认证。",
+    "Add VNext": "添加 VMess 服务器",
+    "Send Through": "传出源地址"
 };

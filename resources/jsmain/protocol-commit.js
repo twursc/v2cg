@@ -1,14 +1,17 @@
 
 function _protoDetailsCommit(page) {
-    var detourIndex = -1;
-    var detourDetails = {};
-    var tagname = $('div#' + page + '-config #'+page+'Tag').val();
-    var listenAddr = $('div#' + page + '-config #'+page+'-listenAddr').val();
-    var listenPort = $('div#' + page + '-config #'+page+'-listenPort').val();
-    var protoname = $('div#' + page + '-config #'+page+'-protocol').val();
-    var protodetails = {};
-    var sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
-    var protodetails_form = $('form').serializeArray();
+    let detourIndex = -1;
+    let detourDetails = {};
+    let tagname = $('div#' + page + '-config #'+page+'Tag').val();
+    let listenAddr = $('div#' + page + '-config #'+page+'-listenAddr').val();
+    let listenPort = $('div#' + page + '-config #'+page+'-listenPort').val();
+    let sendThrough = $('div#' + page + '-config #'+page+'-sendThrough').val();
+    let outboundProxy = $('div#' + page + '-config #'+page+'-outboundProxy').val();
+    let muxConcurrency = $('div#' + page + '-config #'+page+'-muxConcurrency').val();
+    let protoname = $('div#' + page + '-config #'+page+'-protocol').val();
+    let protodetails = {};
+    let sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
+    let protodetails_form = $('form').serializeArray();
 
     Object.keys(content[page + "Detour"]).forEach(function (v) {
         if (content[page + "Detour"][v].tag == tagname) {
@@ -23,18 +26,45 @@ function _protoDetailsCommit(page) {
     setTimeout(function () {
         protodetails = _protoDetailsParse(page, protoname, protodetails);
 
-        detourDetails = {
-            "tag": tagname,
-            "listen": listenAddr,
-            "port": parseInt(listenPort), //TODO: Port-range and multiport support
-            "protocol": protoname,
-            "settings": protodetails,
-            "streamSettings": {},
-            "sniffing": {
-                "enabled": false,
-                "destOverride": []
+        if(page == "inbound") {
+            detourDetails = {
+                "tag": tagname,
+                "listen": listenAddr,
+                "port": parseInt(listenPort), //TODO: Port-range and multiport support
+                "protocol": protoname,
+                "settings": protodetails,
+                "streamSettings": {},
+                "sniffing": {
+                    "enabled": false,
+                    "destOverride": []
+                }
+            };
+        }
+        if(page == "outbound") {
+            if(typeof sendThrough != "undefined" || sendThrough.length == 0) {
+                sendThrough = "0.0.0.0";
             }
-        };
+            detourDetails = {
+                "tag": tagname,
+                "protocol": protoname,
+                "sendThrough": sendThrough,
+                "streamSettings": {},
+                "settings": protodetails,
+                "mux": { "enabled": false }
+            };
+            if(!isNaN(parseInt(muxConcurrency))) {
+                if(parseInt(muxConcurrency) >= 1 && parseInt(muxConcurrency) <= 1024) {
+                    detourDetails["mux"]["enabled"] = true;
+                    detourDetails["mux"]["concurrency"] = parseInt(muxConcurrency);
+                }
+            }
+            if(typeof outboundProxy == "string") {
+                if(outboundProxy.length > 0) {
+                    detourDetails["proxySettings"] = [];
+                    detourDetails["proxySettings"]["tag"] = outboundProxy;
+                }
+            }
+        }
 
         console.log("Saving "+page+" (tag: '"+tagname+"')", detourDetails);
 
