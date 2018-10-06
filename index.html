@@ -212,9 +212,39 @@
             </div>
             <div role="tabpanel" class="tab-pane" id="policy">
                 <h3>Policy</h3>
+                <p class="panedesc">Configure local policies for different user levels, see <a target="_blank" href="https://www.v2ray.com/chapter_02/policy.html">Local Policy</a>.</p>
+                <form class="form-horizontal" id="local-policy-form" style="margin-bottom: 24px;" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Per-Level Configurations</label>
+                        <div class="col-sm-10">
+                            <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                                <table class="table table-condensed" id="policy-levels" style="margin: 0 !important;">
+                                    <thead style=""><tr><td>handshakeLimit</td><td>connIdle</td><td>bufferSize</td><td>uplinkOnly</td><td>downlinkOnly</td><td>statsUserUplink</td><td>statsUserDownlink</td><td>&nbsp;</td></tr></thead>
+                                    <tbody></tbody>
+                                    <tfoot><tr><td colspan="8"><button class="btn btn-default btn-sm" onclick="policy_addLevel();">
+                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Configuration</span></button></td></tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Global Configurations</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">
+                                <label style="font-weight: normal;"><input type="checkbox" id="policy_statsAll_inboudUplink" name="policy_statsAll_inboudUplink"> <span>Enable <b>Uplink</b> statistics for all inbounds.</span></label> &nbsp;<br >
+                                <label style="font-weight: normal;"><input type="checkbox" id="policy_statsAll_inboudDownlink" name="policy_statsAll_inboudUplink"> <span>Enable <b>Downlink</b> statistics for all inbounds.</span></label> &nbsp;
+                            </p>
+                        </div>
+                    </div>
+                </form>
             </div>
             <div role="tabpanel" class="tab-pane" id="dns">
-                <h3>DNS</h3>
+                <h3>Upstream DNS Servers</h3>
+                <p class="panedesc">A preset DNS server list for V2Ray to lookup domains.</p>
+
+                <h3>Static bindings</h3>
+                <p class="panedesc">Point hostnames to static addresses manually.</p>
             </div>
             <div role="tabpanel" class="tab-pane" id="miscellaneous">
                 <h3>Logging</h3>
@@ -266,15 +296,27 @@
                             </p>
                         </div>
                     </div>
-                    <p style="text-align: right"><button class="btn btn-primary" onclick="_loggingCommit()">保存日志配置</button></p>
                 </form>
+                <p>&nbsp;</p>
 
                 <h3>Statistics</h3>
+                <form class="form-horizontal" id="flowstats-config-form" style="margin-bottom: 24px;" onsubmit="return false;">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Options</label>
+                        <div class="col-sm-10">
+                            <p class="form-control-static">
+                                <label style="font-weight: normal;"><input type="checkbox" id="enable_flowstats" name="enable_flowstats"> <span>Enable usage statistics for users who have email set.</span></label> &nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_apiCommit()">Save API and Statistics Configuration</button></p>
+                </form>
             </div>
 
             <div role="tabpanel" class="tab-pane" id="jsoncontent">
                 <h3>JSON Content</h3>
-                <p class="panedesc">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
+                <p class="panedesc" style="margin-bottom: 8px;">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
+                <p class="panedesc">These contents are only stored in current browser's <code>window.localStorage</code> under domain <code id="domainName">undefined</code></p>
                 <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
                 <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
                 &nbsp;<button class="btn btn-default" onclick="_copyJsonContent();">&nbsp; 复制 &nbsp;</button>
@@ -285,6 +327,7 @@
 </div>
 
 <div class="proto_tmpl_container" style="display: none"></div>
+<div class="loading-overlay"> Loading... </div>
 
 </body>
 
@@ -305,7 +348,7 @@
     jsonStorage = window.localStorage;
     $('textarea.jsonContent').val(jsonStorage.getItem("nz.v2cg.storage.content"));
     window.onload = function () {
-        _applyI18N();
+        //_applyI18N();
         _parseJson($('textarea.jsonContent').val());
         _parsePageUI();
     };

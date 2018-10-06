@@ -13,7 +13,7 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbound", "outbound", "routing", "stats", "transport", "policy"];
+    let pkeys = ["log", "inbound", "outbound", "routing", "transport", "policy"];
     for (var p = 0; p <= pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
@@ -59,8 +59,13 @@ function _parseJson(jsoncontent) {
 
 function _parsePageUI() {
     //$('ul.nav-tabs a.tabs-click:first').click();
+    $('code#domainName').text(location.host);
     $.get("prototmpl.html").done(function(data) {
         $('div.proto_tmpl_container').html(data);
+        _applyI18N();
+        $('div.loading-overlay').css("opacity", 0);
+        setTimeout(function() { $('div.loading-overlay').remove(); }, 300);
+
     }).error(function(data) {
         alert("Failed to load protocol templates, terminating...");
         document.clear();

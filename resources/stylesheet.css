@@ -43,6 +43,20 @@
 #inbounds .row div#inbounds-list .inbound-operation,
 #outbounds .row div#outbounds-list .outbound-operation { text-align: right; }
 
+.loading-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    background: white;
+    text-align: center;
+    padding: 20%;
+    font-size: 3rem;
+
+}
+
 
 /* Theme Dark */
 html.theme-dark body {

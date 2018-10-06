@@ -23,9 +23,36 @@ function _loggingCommit() {
 }
 
 function _apiDisplay() {
-
+    if (typeof content["api"] != "undefined") {
+        if(typeof content["api"]["tag"] != "undefined") {
+            $("input#api_conntag").val(content["api"]["tag"]);
+            if(typeof content["api"]["services"] == "object") {
+                $("input#api_service_handler")[0].checked = (content["api"]["services"].indexOf("HandlerService") != -1);
+                $("input#api_service_logger")[0].checked = (content["api"]["services"].indexOf("LoggerService") != -1);
+                $("input#api_service_stats")[0].checked = (content["api"]["services"].indexOf("StatsService") != -1);
+            }
+        }
+    }
+    $("input#enable_flowstats")[0].checked = (typeof content["stats"] == "object");
 }
 
 function _apiCommit() {
+    let tagName = $("input#api_conntag").val();
+    let services = [];
+    if(tagName.length > 0) {
+        if($("input#api_service_handler")[0].checked) { services.push("HandlerService") }
+        if($("input#api_service_logger")[0].checked) { services.push("LoggerService") }
+        if($("input#api_service_stats")[0].checked) { services.push("StatsService") }
+    }
+    content["api"] = {
+        "tag": tagName,
+        "services": services
+    };
 
+    if($("input#enable_flowstats")[0].checked) {
+        content["stats"] = {};
+    } else {
+        delete content["stats"];
+    }
+    _globalCommit();
 }

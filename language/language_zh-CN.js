@@ -77,6 +77,18 @@ i18N["zh-CN"] = {
     "Send Through": "传出源地址",
     "Set API connection tag and which API should be enabled, see <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/api.html\">API</a> .": "设置 API 的传出代理标识，以及需要开启哪些 API。参见 <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/api.html\">API 配置</a> 。",
     "API Outbound Tag": "传出代理标识",
-    "Enabled APIs": "使能的 API"
-
+    "Enabled APIs": "使能的 API",
+    "Configure local policies for different user levels, see <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/policy.html\">Local Policy</a>.": "配置不同用户等级应用的本地策略。参见 <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/policy.html\">本地策略</a> 。",
+    "Save API and Statistics Configuration": "保存 API 和流量统计配置",
+    "Save Logging Configuration": "保存日志配置",
+    "These contents are only stored in current browser's <code>window.localStorage</code> under domain <code id=\"domainName\">undefined</code>": "此内容只保存在当前浏览器 <code id=\"domainName\"></code> 域的 <code>window.localStorage</code> 内。",
+    "Enable usage statistics for users who have email set.": "对设置了 Email 的用户开启流量统计",
+    "Upstream DNS Servers": "上游 DNS 服务器",
+    "A preset DNS server list for V2Ray to lookup domains.": "一个预设的 DNS 服务器列表，用于 V2Ray 内置的域名解析。",
+    "Static bindings": "静态绑定",
+    "Point hostnames to static addresses manually.": "手动绑定域名对应的 IP 地址",
+    "Per-Level Configurations": "单独配置",
+    "Global Configurations": "全局配置",
+    "Enable <b>Uplink</b> statistics for all inbounds.": "对所有传入连接开启<b>上行流量</b>统计",
+    "Enable <b>Downlink</b> statistics for all inbounds.": "对所有传入连接开启<b>下行流量</b>统计"
 };
