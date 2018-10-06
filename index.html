@@ -217,11 +217,11 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">Per-Level Configurations</label>
                         <div class="col-sm-10">
-                            <div style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
+                            <div class="table-responsive" style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
                                 <table class="table table-condensed" id="policy-levels" style="margin: 0 !important;">
-                                    <thead style=""><tr><td>handshakeLimit</td><td>connIdle</td><td>bufferSize</td><td>uplinkOnly</td><td>downlinkOnly</td><td>statsUserUplink</td><td>statsUserDownlink</td><td>&nbsp;</td></tr></thead>
+                                    <thead style="display: none;"><tr><td>handshakeLimit</td><td>connIdle</td><td>bufferSize</td><td>uplinkOnly</td><td>downlinkOnly</td><td>statsUserUplink</td><td>statsUserDownlink</td><td>&nbsp;</td></tr></thead>
                                     <tbody></tbody>
-                                    <tfoot><tr><td colspan="8"><button class="btn btn-default btn-sm" onclick="policy_addLevel();">
+                                    <tfoot><tr><td colspan="9"><button class="btn btn-default btn-sm" onclick="_policyAddLevel();">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Configuration</span></button></td></tr>
                                     </tfoot>
                                 </table>
@@ -237,6 +237,7 @@
                             </p>
                         </div>
                     </div>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_policyCommit()">保存策略配置</button></p>
                 </form>
             </div>
             <div role="tabpanel" class="tab-pane" id="dns">

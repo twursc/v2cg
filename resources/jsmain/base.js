@@ -59,13 +59,12 @@ function _parseJson(jsoncontent) {
 
 function _parsePageUI() {
     //$('ul.nav-tabs a.tabs-click:first').click();
-    $('code#domainName').text(location.host);
     $.get("prototmpl.html").done(function(data) {
         $('div.proto_tmpl_container').html(data);
         _applyI18N();
+        $('code#domainName').text(location.host);
         $('div.loading-overlay').css("opacity", 0);
         setTimeout(function() { $('div.loading-overlay').remove(); }, 300);
-
     }).error(function(data) {
         alert("Failed to load protocol templates, terminating...");
         document.clear();
@@ -106,6 +105,16 @@ function _jsonFormat() {
 
 function _globalCommit() {
     return onContentModified()
+}
+
+function _serializeForm(obj) {
+    let form = obj.serializeArray();
+    let formKeys = Object.keys(form);
+    let formKv = {};
+    for (var v = 0; v < formKeys.length; v++) {
+        formKv[form[v].name] = form[v].value;
+    }
+    return formKv;
 }
 
 function onContentModified() {

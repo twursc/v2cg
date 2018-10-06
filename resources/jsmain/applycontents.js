@@ -37,5 +37,5 @@ function _applyContents() {
     // Fill logging form
     setTimeout("_loggingDisplay()", 10);
     setTimeout("_apiDisplay()", 10);
-
+    setTimeout("_policyDisplay()", 10);
 }
