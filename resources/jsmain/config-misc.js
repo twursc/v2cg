@@ -160,3 +160,4 @@ function _policyCommit() {
     };
     onContentModified();
 }
+
