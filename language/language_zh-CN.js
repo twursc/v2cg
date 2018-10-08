@@ -99,5 +99,13 @@ i18N["zh-CN"] = {
     "Save DNS Servers": "保存 DNS 服务器",
     "Save Bindings": "保存静态绑定",
     "Domain Name": "域名",
-    "Address": "地址"
+    "Address": "地址",
+    "Use <code>domain:***</code> to match subdomains": "域名处填入 <code>domain:abc.com</code> 可用于匹配子域名 *.abc.com",
+    "Enable Mux": "TCP 多路复用",
+    "Mux concurrency (1-1024, default=8), Set to 0 to disable mux.": "最大并发连接数 (1-1024，默认为 8)，设为 0 可禁用 Mux 。",
+    "Configure the internal routing feature of V2Ray, see <a target=\"_blank\" href=\"https://www.v2ray.com/en/configuration/routing.html\">Routing</a> .": "配置 V2Ray 内建的路由功能, 参见 <a target=\"_blank\" href=\"https://www.v2ray.com/chapter_02/03_routing.html\">路由配置</a> 。",
+    "Save Routing Configuration": "保存路由配置",
+    "Domain Resolve Strategy": "域名解析策略",
+    "Rules": "规则列表",
+    "Save Policy Configuration": "保存策略配置"
 };

@@ -7,7 +7,7 @@ function _protoDetailsCommit(page) {
     let listenPort = $('div#' + page + '-config #'+page+'-listenPort').val();
     let sendThrough = $('div#' + page + '-config #'+page+'-sendThrough').val();
     let outboundProxy = $('div#' + page + '-config #'+page+'-outboundProxy').val();
-    let muxConcurrency = $('div#' + page + '-config #'+page+'-muxConcurrency').val();
+    let muxConcurrency = $('div#' + page + '-config #'+page+'-mux').val();
     let protoname = $('div#' + page + '-config #'+page+'-protocol').val();
     let protodetails = {};
     let sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
@@ -41,17 +41,17 @@ function _protoDetailsCommit(page) {
             };
         }
         if(page == "outbound") {
-            if(typeof sendThrough != "undefined" || sendThrough.length == 0) {
-                sendThrough = "0.0.0.0";
-            }
             detourDetails = {
                 "tag": tagname,
                 "protocol": protoname,
-                "sendThrough": sendThrough,
                 "streamSettings": {},
                 "settings": protodetails,
                 "mux": { "enabled": false }
             };
+
+            if(sendThrough.length == 0) {
+                detourDetails['sendThrough'] = sendThrough;
+            }
             if(!isNaN(parseInt(muxConcurrency))) {
                 if(parseInt(muxConcurrency) >= 1 && parseInt(muxConcurrency) <= 1024) {
                     detourDetails["mux"]["enabled"] = true;

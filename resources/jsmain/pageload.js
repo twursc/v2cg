@@ -20,6 +20,19 @@ function _showconn(page, tagname) {
                 $('div#' + page + '-config #' + page + 'Tag').val(tagname).change();
                 $('div#' + page + '-config #' + page + '-sendThrough').val(v['sendThrough']);
                 $('div#' + page + '-config #' + page + '-protocol').val("null").val(v['protocol']).change();
+                if(typeof v['mux'] == "object") {
+                    if(v['mux']['enabled'] == true) {
+                        if(typeof v['mux']['concurrency'] == "number") {
+                            $('div#' + page + '-config #' + page + '-mux').val(v['mux']['concurrency']);
+                        } else {
+                            $('div#' + page + '-config #' + page + '-mux').val(8);
+                        }
+                    } else {
+                        $('div#' + page + '-config #' + page + '-mux').val(0);
+                    }
+                } else {
+                    $('div#' + page + '-config #' + page + '-mux').val(0);
+                }
             }
         }
     });
