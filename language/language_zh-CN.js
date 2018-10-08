@@ -97,5 +97,7 @@ i18N["zh-CN"] = {
     "Priority Domains": "优先使用此服务器查询的域名",
     "Add Server": "添加服务器",
     "Save DNS Servers": "保存 DNS 服务器",
-    "Save Bindings": "保存静态绑定"
+    "Save Bindings": "保存静态绑定",
+    "Domain Name": "域名",
+    "Address": "地址"
 };

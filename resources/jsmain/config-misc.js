@@ -60,31 +60,33 @@ function _apiCommit() {
 
 function _policyDisplay() {
     $("table#policy-levels tbody").html("");
-    Object.keys(content["policy"]["levels"]).forEach(function(level) {
-        let row = _policyAddLevel();
-        let levelInfo = content["policy"]["levels"][level];
-        console.log('form#local-policy-form input[name=\"policy_level_' + row + '\"]');
-        $('form#local-policy-form input[name=\"policy_level_' + row + '\"]').val(parseInt(level));
-        $('form#local-policy-form input[name=\"policy_handshake_' + row + '\"]').val(parseInt(levelInfo["handshake"]));
-        $('form#local-policy-form input[name=\"policy_connIdle_' + row + '\"]').val(parseInt(levelInfo["connIdle"]));
-        $('form#local-policy-form input[name=\"policy_uplinkOnly_' + row + '\"]').val(parseInt(levelInfo["uplinkOnly"]));
-        $('form#local-policy-form input[name=\"policy_downlinkOnly_' + row + '\"]').val(parseInt(levelInfo["downlinkOnly"]));
-        $('form#local-policy-form input[name=\"policy_bufferSize_' + row + '\"]').val(parseInt(levelInfo["bufferSize"]));
-        if(levelInfo["statsUserUplink"]) {
-            $('input#policy_statsUplink_0').parent().addClass('active');
-            $('form#local-policy-form input#policy_statsUplink_' + row)[0].checked = true;
-        } else {
-            $('input#policy_statsUplink_0').parent().removeClass('active');
-            $('form#local-policy-form input#policy_statsUplink_' + row)[0].checked = false;
-        }
-        if(levelInfo["statsUserDownlink"]) {
-            $('input#policy_statsDownlink_0').parent().addClass('active');
-            $('form#local-policy-form input#policy_statsDownlink_' + row)[0].checked = true;
-        } else {
-            $('input#policy_statsDownlink_0').parent().removeClass('active');
-            $('form#local-policy-form input#policy_statsDownlink_' + row)[0].checked = false;
-        }
-    });
+    if(typeof content["policy"]["levels"] == "object") {
+        Object.keys(content["policy"]["levels"]).forEach(function (level) {
+            let row = _policyAddLevel();
+            let levelInfo = content["policy"]["levels"][level];
+            console.log('form#local-policy-form input[name=\"policy_level_' + row + '\"]');
+            $('form#local-policy-form input[name=\"policy_level_' + row + '\"]').val(parseInt(level));
+            $('form#local-policy-form input[name=\"policy_handshake_' + row + '\"]').val(parseInt(levelInfo["handshake"]));
+            $('form#local-policy-form input[name=\"policy_connIdle_' + row + '\"]').val(parseInt(levelInfo["connIdle"]));
+            $('form#local-policy-form input[name=\"policy_uplinkOnly_' + row + '\"]').val(parseInt(levelInfo["uplinkOnly"]));
+            $('form#local-policy-form input[name=\"policy_downlinkOnly_' + row + '\"]').val(parseInt(levelInfo["downlinkOnly"]));
+            $('form#local-policy-form input[name=\"policy_bufferSize_' + row + '\"]').val(parseInt(levelInfo["bufferSize"]));
+            if (levelInfo["statsUserUplink"]) {
+                $('input#policy_statsUplink_0').parent().addClass('active');
+                $('form#local-policy-form input#policy_statsUplink_' + row)[0].checked = true;
+            } else {
+                $('input#policy_statsUplink_0').parent().removeClass('active');
+                $('form#local-policy-form input#policy_statsUplink_' + row)[0].checked = false;
+            }
+            if (levelInfo["statsUserDownlink"]) {
+                $('input#policy_statsDownlink_0').parent().addClass('active');
+                $('form#local-policy-form input#policy_statsDownlink_' + row)[0].checked = true;
+            } else {
+                $('input#policy_statsDownlink_0').parent().removeClass('active');
+                $('form#local-policy-form input#policy_statsDownlink_' + row)[0].checked = false;
+            }
+        });
+    }
     if(typeof content["policy"]["system"] == "object") {
         $("form#local-policy-form #policy_statsAll_inboudUplink")[0].checked = content["policy"]["system"]["statsInboundUplink"];
         $("form#local-policy-form #policy_statsAll_inboudDownlink")[0].checked = content["policy"]["system"]["statsInboundDownlink"];
@@ -221,12 +223,75 @@ function _dnsGetServerList() {
 }
 
 function _dnsServersDisplay() {
-    $("table#table#dns-servers tbody").html("");
+    $("table#dns-servers tbody").html("");
     Object.keys(content["dns"]["servers"]).forEach(function(k) {
         let row = _dnsAddServer();
-        let info = content["dns"]["servers"][k];
+        let info = {};
+        if(typeof content["dns"]["servers"][k] == "object") {
+            info = content["dns"]["servers"][k];
+        } else {
+            info = { address: content["dns"]["servers"][k], port: 53, domains: [] }
+        }
         $('form#dns-config-form input[name=\"dns_addr_' + row + '\"]').val(info["address"]);
         $('form#dns-config-form input[name=\"dns_port_' + row + '\"]').val(parseInt(info["port"]));
         $('form#dns-config-form textarea[name=\"dns_assocdomains_' + row + '\"]').val(info["domains"].join("\n"));
+    });
+}
+
+function _dnsAddBinding() {
+    let count = $("table#dns-static-bindings tbody .dns-binding").length;
+    let tmpl = "<tr class=\"dns-binding\">" +
+        "    <td style=\"width: 65%\"><input class=\"form-control input-sm\" placeholder=\"" + i18N[using_language]["Domain Name"] + "\" type=\"text\" name=\"dnsbinding_domain_" + count + "\"></td>\n" +
+        "    <td><input class=\"form-control input-sm\" placeholder=\"" + i18N[using_language]["Address"] + "\" type=\"text\" name=\"dnsbinding_addr_" + count + "\"></td>\n" +
+        "    <td><button class=\"btn btn-default btn-sm\" onclick=\"_dnsRemoveBinding(this)\">" +
+        "        <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp; <span>" + i18N[using_language]["Remove"] + "</span></button></td>\n" +
+        "</tr>";
+    $("table#dns-static-bindings tbody").append(tmpl);
+    return count;
+}
+
+function _dnsRemoveBinding(obj) {
+    let boxes = obj.parentNode.parentNode.children;
+    Object.keys(boxes).forEach(function (k) {
+        boxes[k].children[0].disabled = true;
+        boxes[k].children[0].value = "";
+    });
+    obj.disabled = true;
+}
+
+function _dnsGetBindingList() {
+    let form = _serializeForm($('form#dns-config-form'));
+    let dnsBinding = {};
+    let formKeys = Object.keys(form);
+
+    for (var i = 0; i < formKeys.length; i++) {
+        let formKey = Object.keys(form)[i];
+        let formVal = form[formKey];
+        if (formKey != undefined && formKey.substr(0, 18) == "dnsbinding_domain_") {
+            let lf = formKey.split('_');
+            let bindAddr = form["dnsbinding_addr_" + lf[2]];
+            if(formVal.length >= 2 && bindAddr.length >= 2) {
+                dnsBinding[formVal] = bindAddr;
+            }
+        }
+    }
+    return dnsBinding;
+}
+
+function _dnsBindingCommit() {
+    if(typeof content["dns"] != "object") {
+        content["dns"] = {};
+    }
+    content["dns"]["hosts"] = _dnsGetBindingList();
+    _globalCommit();
+}
+
+function _dnsBindingDisplay() {
+    $("table#dns-static-bindings tbody").html("");
+    Object.keys(content["dns"]["hosts"]).forEach(function(domain) {
+        let row = _dnsAddBinding();
+        let addr = content["dns"]["hosts"][domain];
+        $('form#dns-config-form input[name=\"dnsbinding_domain_' + row + '\"]').val(domain);
+        $('form#dns-config-form input[name=\"dnsbinding_addr_' + row + '\"]').val(addr);
     });
 }

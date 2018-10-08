@@ -138,7 +138,7 @@ function _protoDetailsDisplay(page, protoname, details) {
                     $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item input[name=ssremote_password_"+newrow+"]").val(info["password"]);
                     $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item input[name=ssremote_crypto_"+newrow+"]").val(info["method"]);
                     $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item input[name=ssremote_level_"+newrow+"]").val(info["level"]);
-                    $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item  input#ssremote_ota_" + newrow)[0].checked = info["ota"];
+                    $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item input#ssremote_ota_" + newrow)[0].checked = info["ota"];
                     if(info["ota"]) { $(".protodetails table#shadowsocks_remotes tbody tr.ss_remote_item  input#ssremote_ota_" + newrow).parent().addClass("active"); }
                 });
             }
