@@ -231,7 +231,15 @@
                         <label class="col-sm-2 control-label">Rules</label>
                         <div class="col-sm-10">
                             <table class="table" id="routing-rules">
-                                <tbody></tbody>
+                                <tbody>
+                                    <tr class="routing-rule-item"><td>
+                                        <div class="col-sm-2"><textarea name="rulematch_domain_0" placeholder="Match Domain"></textarea></div>
+                                        <div class="col-sm-2"><textarea name="rulematch_destip_0" placeholder="Match Destination IP"></textarea></div>
+                                        <div class="col-sm-2"><textarea name="rulematch_srcip_0" placeholder="Match Source IP"></textarea></div>
+                                        <div class="col-sm-2"><textarea name="rulematch_user_0" placeholder="Match User email"></textarea></div>
+                                        <div class="col-sm-2"><textarea name="rulematch_inbound_0" placeholder="Match Inbound Tag"></textarea></div>
+                                    </td></tr>
+                                </tbody>
                                 <tfoot><tr><td style="padding: 0">
                                     <div class="col-sm-12" style="padding: 0; margin-top: 4px;">
                                         <button class="btn btn-default btn-sm" onclick="_routeRuleAdd();">

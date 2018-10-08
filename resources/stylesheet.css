@@ -43,6 +43,13 @@
 #inbounds .row div#inbounds-list .inbound-operation,
 #outbounds .row div#outbounds-list .outbound-operation { text-align: right; }
 
+.routing-rule-item td { padding: 0 !important; }
+.routing-rule-item td > div {
+    padding: 8px;
+    border: 1px solid #ccc !important;
+    border-radius: 4px;
+    box-shadow: 0 0 1px #ddd;
+}
 
 .dns-textarea {
     margin-top: 16px;

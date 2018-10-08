@@ -224,18 +224,20 @@ function _dnsGetServerList() {
 
 function _dnsServersDisplay() {
     $("table#dns-servers tbody").html("");
-    Object.keys(content["dns"]["servers"]).forEach(function(k) {
-        let row = _dnsAddServer();
-        let info = {};
-        if(typeof content["dns"]["servers"][k] == "object") {
-            info = content["dns"]["servers"][k];
-        } else {
-            info = { address: content["dns"]["servers"][k], port: 53, domains: [] }
-        }
-        $('form#dns-config-form input[name=\"dns_addr_' + row + '\"]').val(info["address"]);
-        $('form#dns-config-form input[name=\"dns_port_' + row + '\"]').val(parseInt(info["port"]));
-        $('form#dns-config-form textarea[name=\"dns_assocdomains_' + row + '\"]').val(info["domains"].join("\n"));
-    });
+    if(typeof content["dns"]["servers"] == "object") {
+        Object.keys(content["dns"]["servers"]).forEach(function (k) {
+            let row = _dnsAddServer();
+            let info = {};
+            if (typeof content["dns"]["servers"][k] == "object") {
+                info = content["dns"]["servers"][k];
+            } else {
+                info = {address: content["dns"]["servers"][k], port: 53, domains: []}
+            }
+            $('form#dns-config-form input[name=\"dns_addr_' + row + '\"]').val(info["address"]);
+            $('form#dns-config-form input[name=\"dns_port_' + row + '\"]').val(parseInt(info["port"]));
+            $('form#dns-config-form textarea[name=\"dns_assocdomains_' + row + '\"]').val(info["domains"].join("\n"));
+        });
+    }
 }
 
 function _dnsAddBinding() {
@@ -288,10 +290,12 @@ function _dnsBindingCommit() {
 
 function _dnsBindingDisplay() {
     $("table#dns-static-bindings tbody").html("");
-    Object.keys(content["dns"]["hosts"]).forEach(function(domain) {
-        let row = _dnsAddBinding();
-        let addr = content["dns"]["hosts"][domain];
-        $('form#dns-config-form input[name=\"dnsbinding_domain_' + row + '\"]').val(domain);
-        $('form#dns-config-form input[name=\"dnsbinding_addr_' + row + '\"]').val(addr);
-    });
+    if(typeof content["dns"]["hosts"] == "object") {
+        Object.keys(content["dns"]["hosts"]).forEach(function (domain) {
+            let row = _dnsAddBinding();
+            let addr = content["dns"]["hosts"][domain];
+            $('form#dns-config-form input[name=\"dnsbinding_domain_' + row + '\"]').val(domain);
+            $('form#dns-config-form input[name=\"dnsbinding_addr_' + row + '\"]').val(addr);
+        });
+    }
 }
