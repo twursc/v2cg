@@ -246,27 +246,16 @@
                     <h3>Upstream DNS Servers</h3>
                     <p class="panedesc">A preset DNS server list for V2Ray to lookup domains.</p>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">Servers</label>
-                        <div class="col-sm-10">
-                            <div class="table-responsive" style="border: 1px solid #ccc; border-radius: 4px; box-shadow: 0 0 1px #ddd">
-                                <table class="table table-condensed" id="dns-servers" style="margin: 0 !important;">
-                                    <thead style="display: none;"><tr><td>Address</td><td>UDP Port</td><td>Domains to query from this server</td><td>&nbsp;</td></tr></thead>
-                                    <tbody>
-                                        <tr class="dns-item">
-                                            <td style="width: 20%"><input type="text" class="form-control" id="dns_addr_0" name="dns_addr_0" placeholder="Server Address"></td>
-                                            <td style="width: 12%"><input type="number" class="form-control" id="dns_port_0" name="dns_port_0" placeholder="UDP Port"></td>
-                                            <td><textarea class="form-control" id="dns_assocdomains_0" name="dns_assocdomains_0" placeholder="Domains to query from this server, split by return or double space." style="resize: none"></textarea></td>
-                                            <td><button class="btn btn-default btn-sm" onclick="_policyRemoveLevel(this)">
-                                                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>&nbsp; <span>Remove</span></button></td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot><tr><td colspan="4"><button class="btn btn-default btn-sm" onclick="_dnsAddServer();">
-                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Server</span></button></td></tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                        </div>
+                        <table class="table" id="dns-servers">
+                            <tbody></tbody>
+                            <tfoot><tr><td>
+                                <button class="btn btn-default btn-sm" onclick="_dnsAddServer();">
+                                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;
+                                    <span>Add Server</span></button>
+                            </td></tr></tfoot>
+                        </table>
                     </div>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_dnsServersCommit()">Save DNS Servers</button></p>
 
 
                     <p>&nbsp;</p><h3>Static bindings</h3>
@@ -278,7 +267,7 @@
                                 <table class="table table-condensed" id="dns-static-bindings" style="margin: 0 !important;">
                                     <thead style="display: none;"><tr><td>Hostname</td><td>Address</td><td>&nbsp;</td></tr></thead>
                                     <tbody></tbody>
-                                    <tfoot><tr><td colspan="3"><button class="btn btn-default btn-sm" onclick="_dnsAddStatic();">
+                                    <tfoot><tr><td colspan="3"><button class="btn btn-default btn-sm" onclick="_dnsAddBinding();">
                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp; <span>Add Host</span></button></td></tr>
                                     </tfoot>
                                 </table>
@@ -286,7 +275,7 @@
                             <span><font style="color: red">*</font> <span>Use <code>domain:***</code> to match subdomains</span></span>
                         </div>
                     </div>
-                    <p style="text-align: right"><button class="btn btn-primary" onclick="_policyCommit()">保存策略配置</button></p>
+                    <p style="text-align: right"><button class="btn btn-primary" onclick="_dnsBindingCommit()">Save Bindings</button></p>
                 </form>
 
             </div>

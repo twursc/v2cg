@@ -43,6 +43,12 @@
 #inbounds .row div#inbounds-list .inbound-operation,
 #outbounds .row div#outbounds-list .outbound-operation { text-align: right; }
 
+
+.dns-textarea {
+    margin-top: 16px;
+    margin-bottom: 20px;
+}
+
 .loading-overlay {
     position: absolute;
     left: 0;

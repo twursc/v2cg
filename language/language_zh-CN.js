@@ -90,5 +90,12 @@ i18N["zh-CN"] = {
     "Per-Level Configurations": "单独配置",
     "Global Configurations": "全局配置",
     "Enable <b>Uplink</b> statistics for all inbounds.": "对所有传入连接开启<b>上行流量</b>统计",
-    "Enable <b>Downlink</b> statistics for all inbounds.": "对所有传入连接开启<b>下行流量</b>统计"
+    "Enable <b>Downlink</b> statistics for all inbounds.": "对所有传入连接开启<b>下行流量</b>统计",
+    "Server Address": "服务器地址",
+    "UDP Port": "UDP 端口号",
+    "Domains to query from this server, split by return or double space. Match subdomain by \"domain:abc.com\"": "需要优先使用此服务器查询的域名，用回车或两个空格分隔多个域名。支持 domain:abc.com 匹配子域名 *.abc.com",
+    "Priority Domains": "优先使用此服务器查询的域名",
+    "Add Server": "添加服务器",
+    "Save DNS Servers": "保存 DNS 服务器",
+    "Save Bindings": "保存静态绑定"
 };

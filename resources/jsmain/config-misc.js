@@ -161,3 +161,72 @@ function _policyCommit() {
     onContentModified();
 }
 
+
+function _dnsAddServer() {
+    let count = $("table#dns-servers tbody .dns-item").length;
+    let tmpl = "<tr class=\"dns-item\"><td>\n" +
+        "    <label for=\"dns_addr_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Server Address"] + "</label><div class=\"col-sm-5\"><input type=\"text\" class=\"form-control\" id=\"dns_addr_" + count + "\" name=\"dns_addr_" + count + "\" placeholder=\"" + i18N[using_language]["Server Address"] + "\"></div>\n" +
+        "    <label for=\"dns_port_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["UDP Port"] + "</label><div class=\"col-sm-2\"><input type=\"number\" class=\"form-control\" id=\"dns_port_" + count + "\" name=\"dns_port_" + count + "\" value=\"53\" placeholder=\"" + i18N[using_language]["UDP Port"] + "\"></div>" +
+        "    <div class=\"col-sm-1\"><button class=\"btn btn-default btn-sm\" onclick=\"_dnsRemoveServer(this);\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp; <span>" + i18N[using_language]["Remove"] + "</span></button></div>\n" +
+        "    <label for=\"dns_assocdomains_" + count + "\" class=\"col-sm-2 control-label\" style=\"margin-top: 16px;\">" + i18N[using_language]["Priority Domains"] + "</label>\n" +
+        "    <div class=\"col-sm-10 dns-textarea\"><textarea class=\"form-control\" id=\"dns_assocdomains_" + count + "\" name=\"dns_assocdomains_" + count + "\" placeholder=\"" + i18N[using_language]["Domains to query from this server, split by return or double space. Match subdomain by \"domain:abc.com\""] + "\" style=\"resize: vertical; height: 128px;\"></textarea></div>\n" +
+        "</td></tr>";
+    $("table#dns-servers tbody").append(tmpl);
+    return count;
+}
+
+function _dnsRemoveServer(obj) {
+    let boxes = obj.parentNode.parentNode.children;
+    Object.keys(boxes).forEach(function (k) {
+        if(boxes[k].children.length != 0) {
+            boxes[k].children[0].disabled = true;
+            boxes[k].children[0].value = "";
+        }
+    });
+    obj.disabled = true;
+}
+
+function _dnsServersCommit() {
+    if(typeof content["dns"] != "object") {
+        content["dns"] = {};
+    }
+    content["dns"]["servers"] = _dnsGetServerList();
+    onContentModified();
+}
+
+function _dnsGetServerList() {
+    let form = _serializeForm($('form#dns-config-form'));
+    let dnsServers = [];
+    let formKeys = Object.keys(form);
+
+    for (var i = 0; i < formKeys.length; i++) {
+        let formKey = Object.keys(form)[i];
+        let formVal = form[formKey];
+        console.log(formKey);
+        if (formKey != undefined && formKey.substr(0, 9) == "dns_addr_") {
+            let lf = formKey.split('_');
+            let dnsPort = form["dns_port_" + lf[2]];
+            let ascDomains = form["dns_assocdomains_" + lf[2]];
+            let currentDns = { address: formVal, port: 53, domains: [] };
+            if(!isNaN(parseInt(dnsPort))) { currentDns.port = parseInt(dnsPort) }
+            if(ascDomains.length > 1) {
+                ascDomains = ascDomains.replace(/\n/g, "  ");
+                ascDomains = ascDomains.replace(/\r\n/g, "  ");
+                currentDns.domains = ascDomains.split("  ");
+            }
+            dnsServers.push(currentDns);
+        }
+    }
+    return dnsServers;
+}
+
+function _dnsServersDisplay() {
+    $("table#table#dns-servers tbody").html("");
+    Object.keys(content["dns"]["servers"]).forEach(function(k) {
+        let row = _dnsAddServer();
+        let info = content["dns"]["servers"][k];
+        $('form#dns-config-form input[name=\"dns_addr_' + row + '\"]').val(info["address"]);
+        $('form#dns-config-form input[name=\"dns_port_' + row + '\"]').val(parseInt(info["port"]));
+        $('form#dns-config-form textarea[name=\"dns_assocdomains_' + row + '\"]').val(info["domains"].join("\n"));
+    });
+}
