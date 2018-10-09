@@ -49,7 +49,7 @@ function _protoDetailsCommit(page) {
                 "mux": { "enabled": false }
             };
 
-            if(sendThrough.length == 0) {
+            if(sendThrough.length != 0 && sendThrough != "0.0.0.0") {
                 detourDetails['sendThrough'] = sendThrough;
             }
             if(!isNaN(parseInt(muxConcurrency))) {

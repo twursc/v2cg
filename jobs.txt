@@ -1,0 +1,26 @@
+﻿配置文件
+    文件格式
+        日志配置	ok
+        连接配置	partial
+    协议列表
+        Blackhole	ok
+        Dokodemo	ok
+        Freedom		ok
+        HTTP		ok
+        MTProto		ok
+        Shadowsocks	ok
+        SOCKS		ok
+        VMess		ok
+    本地策略		ok
+    路由配置		
+    DNS 配置		ok
+    Mux 配置		ok
+    API 配置		ok
+    统计信息		ok
+    传输配置
+        TCP
+        mKCP
+        WebSocket
+        HTTP/2
+        DomainSocket
+
