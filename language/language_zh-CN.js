@@ -107,5 +107,17 @@ i18N["zh-CN"] = {
     "Save Routing Configuration": "保存路由配置",
     "Domain Resolve Strategy": "域名解析策略",
     "Rules": "规则列表",
-    "Save Policy Configuration": "保存策略配置"
+    "Save Policy Configuration": "保存策略配置",
+
+    "Priority": "优先级",
+    "Take Outbound": "从此连接传出",
+    "Match Destination": "匹配目的地址",
+    "Match Domain": "匹配域名",
+    "Match Destination Port": "匹配目的端口",
+    "Match IP Protocol": "匹配 IP 协议",
+    "Match Source": "匹配源地址",
+    "Match Email": "匹配用户 Email",
+    "Match InboundTag": "匹配传入连接",
+    "Match Application": "匹配应用层协议",
+    "Add Rule": "添加规则"
 };
