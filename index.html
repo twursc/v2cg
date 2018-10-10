@@ -232,15 +232,108 @@
                         <div class="col-sm-10">
                             <table class="table" id="routing-rules">
                                 <tbody>
-                                    <tr class="routing-rule-item"><td>
+                                <tr class="routing-rule-item">
+                                    <td>
                                         <div class="row">
-                                            <div class="col-sm-2"><textarea class="form-control" name="rulematch_domain_0" placeholder="Match Domain"></textarea></div>
-                                            <div class="col-sm-2"><textarea class="form-control" name="rulematch_destip_0" placeholder="Match Destination IP"></textarea></div>
-                                            <div class="col-sm-2"><textarea class="form-control" name="rulematch_srcip_0" placeholder="Match Source IP"></textarea></div>
-                                            <div class="col-sm-2"><textarea class="form-control" name="rulematch_user_0" placeholder="Match User email"></textarea></div>
-                                            <div class="col-sm-2"><textarea class="form-control" name="rulematch_inbound_0" placeholder="Match Inbound Tag"></textarea></div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchDestIP_0" name="rule_SwMatchDestIP_0" type="checkbox">
+                                                        <span>匹配目的地址</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="rule_BoxMatchDestIP_0" placeholder="Match Destination IP"></textarea>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchDomain_0" name="rule_SwMatchDomain_0" type="checkbox">
+                                                        <span>匹配域名</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="rule_BoxMatchDomain_0" placeholder="Match Domain Name"></textarea>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchDestPort_0" name="rule_SwMatchDestPort_0" type="checkbox">
+                                                        <span>匹配目的端口</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="rule_BoxMatchDomain_0" id="rule_BoxMatchDomain_0" placeholder="Match Destination Port">
+                                                </div>
+                                                <div class="col-sm-2">&nbsp;</div>
+                                                <div class="col-sm-2" style="text-align: right;">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchProto_0" name="rule_SwMatchProto_0" type="checkbox">
+                                                        <span>匹配 IP 协议</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;"><input type="checkbox" id="rule_SwMatchProtoTCP_0" name="rule_SwMatchProtoTCP_0">
+                                                        <span> TCP</span></label>&nbsp; &nbsp;
+                                                    <label style="font-weight: normal;"><input type="checkbox" id="rule_SwMatchProtoUDP_0" name="rule_SwMatchProtoUDP_0">
+                                                        <span> UDP</span></label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchSrcIP_0" name="rule_SwMatchSrcIP_0" type="checkbox">
+                                                        <span>匹配源地址</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="rule_BoxMatchSrcIP_0" placeholder="Match Source IP"></textarea>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchSrcEmail_0" name="rule_SwMatchSrcEmail_0" type="checkbox">
+                                                        <span>匹配用户 Email</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="rule_BoxMatchSrcEmail_0" placeholder="Match User Email"></textarea>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchInbound_0" name="rule_SwMatchInbound_0" type="checkbox">
+                                                        <span>匹配传入连接</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-10">
+                                                    <textarea class="form-control" name="rule_BoxMatchInbound_0" placeholder="Match InboundTag"></textarea>
+                                                </div>
+
+                                                <div class="col-sm-2">
+                                                    <label style="font-weight: normal;">
+                                                        <input id="rule_SwMatchL7Proto_0" name="rule_SwMatchL7Proto_0" type="checkbox">
+                                                        <span>匹配应用层协议</span>
+                                                    </label>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <label style="font-weight: normal;"><input type="checkbox" id="rule_SwMatchL7Proto_http_0" name="rule_SwMatchL7Proto_http_0">
+                                                        <span> HTTP</span></label>&nbsp; &nbsp;
+                                                    <label style="font-weight: normal;"><input type="checkbox" id="rule_SwMatchL7Proto_tls_0" name="rule_SwMatchL7Proto_tls_0">
+                                                        <span> TLS</span></label>&nbsp; &nbsp;
+                                                    <label style="font-weight: normal;"><input type="checkbox" id="rule_SwMatchL7Proto_btor_0" name="rule_SwMatchL7Proto_btor_0">
+                                                        <span> BitTorrent</span></label>
+                                                </div>
+
+                                                <div class="col-sm-1">&nbsp;</div>
+                                                <label for="rule_takeOutbound_0" class="col-sm-2 control-label"><span>Take Outbound</span></label>
+                                                <div class="col-sm-3">
+                                                    <input type="text" class="form-control" name="rule_BoxMatchDomain_0" id="rule_takeOutbound_0" placeholder="Take outbound">
+                                                </div>
+                                            </div>
                                         </div>
-                                    </td></tr>
+                                    </td>
+                                </tr>
                                 </tbody>
                                 <tfoot><tr><td style="padding: 0">
                                     <div class="col-sm-12" style="padding: 0; margin-top: 4px;">

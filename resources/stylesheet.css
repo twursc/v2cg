@@ -44,12 +44,23 @@
 #outbounds .row div#outbounds-list .outbound-operation { text-align: right; }
 
 .routing-rule-item td { padding: 0 !important; }
-.routing-rule-item td > div {
+.routing-rule-item td > div.row {
+    margin-left: 0;
+    margin-right: 0;
     padding: 8px;
     border: 1px solid #ccc !important;
     border-radius: 4px;
     box-shadow: 0 0 1px #ddd;
 }
+.routing-rule-item td > div.row > div.row {
+    margin-left: 0 !important;
+}
+
+.routing-rule-item td > div.row > div > div {
+    margin-bottom: 12px;
+}
+
+.routing-rule-item td textarea { resize: vertical; }
 
 .dns-textarea {
     margin-top: 16px;
