@@ -4,6 +4,7 @@ i18N["zh-CN"] = {
     "Outbounds": "传出连接",
     "Routing": "路由",
     "Policy": "用户策略",
+    "Transports": "传输配置",
     "Transports (Global)": "传输配置 (全局)",
     "Miscellaneous": "杂项",
     "Logging": "日志",
@@ -109,6 +110,9 @@ i18N["zh-CN"] = {
     "Rules": "规则列表",
     "Save Policy Configuration": "保存策略配置",
 
+    "AsIs - Select routine based on domain name": "AsIs - 遇到域名时直接匹配域名",
+    "IPIfNonMatch - Only select routine based on resolved IP if no domain names matched": "IPIfNonMatch - 遇到域名且没有规则匹配该域名时，先解析为 IP 然后按照 IP 进行匹配",
+    "IPOnDemand - Always select routine based on resolved IP": "IPOnDemand - 遇到域名时一律解析为 IP 后匹配 IP。",
     "Priority": "优先级",
     "Take Outbound": "从此连接传出",
     "Match Destination": "匹配目的地址",

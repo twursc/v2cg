@@ -71,6 +71,11 @@ function _protoDetailsCommit(page) {
         if (detourIndex == -1) {
             content[page + "Detour"].push(detourDetails)
         } else {
+            //fixme: remove the following determination while per-detour transport config finished.
+            if(typeof content[page + "Detour"][detourIndex]["streamSettings"] == "object") {
+                console.warn("Recovering streamSettings from " + detourIndex, content[page+"Detour"][detourIndex]);
+                detourDetails["streamSettings"] = content[page + "Detour"][detourIndex]["streamSettings"];
+            }
             content[page + "Detour"][detourIndex] = detourDetails;
         }
 

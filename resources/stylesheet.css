@@ -47,11 +47,17 @@
 .routing-rule-item td > div.row {
     margin-left: 0;
     margin-right: 0;
+    margin-bottom: 16px;
     padding: 8px;
     border: 1px solid #ccc !important;
     border-radius: 4px;
     box-shadow: 0 0 1px #ddd;
+    transition: 0.25s;
 }
+.routing-rule-item td > div.row:hover {
+    background-color: #fafafa;
+}
+
 .routing-rule-item td > div.row > div.row {
     margin-left: 0 !important;
 }
