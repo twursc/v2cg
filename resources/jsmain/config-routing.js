@@ -50,7 +50,7 @@ function _routingAddRule() {
         "                <textarea class=\"form-control\" id=\"rule_SwMatchInbound_" + count + "\" name=\"rule_SwMatchInbound_" + count + "\" placeholder=\"Match InboundTag\"></textarea>\n" +
         "            </div>\n" +
         "            <label class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Application"] + "</label>\n" +
-        "            <div class=\"col-sm-9\">\n" +
+        "            <div class=\"col-sm-8\">\n" +
         "                <p class=\"form-control-static\">\n" +
         "                    <label style=\"font-weight: normal;\"><input type=\"checkbox\" id=\"rule_SwMatchL7Proto_http_" + count + "\" name=\"rule_SwMatchL7Proto_http_" + count + "\">\n" +
         "                        <span> HTTP</span></label>&nbsp; &nbsp;\n" +
@@ -60,7 +60,7 @@ function _routingAddRule() {
         "                        <span> BitTorrent</span></label>\n" +
         "                </p>\n" +
         "            </div>\n" +
-        "            <div class=\"col-sm-1\">\n" +
+        "            <div class=\"col-sm-2\">\n" +
         "                <button class=\"btn btn-default\" onclick=\"_routingRemoveRule(this)\">\n" +
         "                    <span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span>&nbsp; <span>" + i18N[using_language]["Remove"] + "</span></button>\n" +
         "            </div>\n" +
@@ -99,4 +99,5 @@ function _routingRemoveRule(obj) {
 function _routingGetRules() {
     let formData = _serializeForm($('form#routing-config-form'));
     console.log(formData);
+
 }
