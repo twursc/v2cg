@@ -97,7 +97,84 @@ function _routingRemoveRule(obj) {
 }
 
 function _routingGetRules() {
-    let formData = _serializeForm($('form#routing-config-form'));
-    console.log(formData);
+    let form = _serializeForm($('form#routing-config-form'));
+    let routingRules = [];
+    let formKeys = Object.keys(form);
+    let currentPriority = 0;
 
+    for (var i = 0; i < formKeys.length; i++) {
+        let formKey = Object.keys(form)[i];
+        let formVal = form[formKey];
+        if (typeof formKey != "undefined" && formKey.substr(0, 18) == "rule_takeOutbound_") {
+            let lf = formKey.split('_');
+            if(formVal.length > 0) {
+                let current = {
+                    type: "field",
+                    outboundTag: formVal
+                };
+                let matchL4Proto = [];
+                let matchL7Proto = [];
+                if(form["rule_SwMatchDestIP_" + lf[2]]) {
+                    let items = form["rule_SwMatchDestIP_" + lf[2]].trim();
+                    items = items.replace(/\r\n/g, "  ");
+                    items = items.replace(/\n/g, "  ");
+                    items = items.split("  ");
+                    current.ip = items;
+                }
+                if(form["rule_SwMatchDomain_" + lf[2]]) {
+                    let items = form["rule_SwMatchDomain_" + lf[2]].trim();
+                    items = items.replace(/\r\n/g, "  ");
+                    items = items.replace(/\n/g, "  ");
+                    items = items.split("  ");
+                    current.domain = items;
+                }
+                if(form["rule_SwMatchDestPort_" + lf[2]]) {
+                    current.port = form["rule_SwMatchDestPort_" + lf[2]].trim();
+                }
+                if(form["rule_SwMatchSrcIP_" + lf[2]]) {
+                    let items = form["rule_SwMatchSrcIP_" + lf[2]].trim();
+                    items = items.replace(/\r\n/g, "  ");
+                    items = items.replace(/\n/g, "  ");
+                    items = items.split("  ");
+                    current.source = items;
+                }
+                if(form["rule_SwMatchSrcEmail_" + lf[2]]) {
+                    let items = form["rule_SwMatchSrcEmail_" + lf[2]].trim();
+                    items = items.replace(/\r\n/g, "  ");
+                    items = items.replace(/\n/g, "  ");
+                    items = items.split("  ");
+                    current.user = items;
+                }
+                if(form["rule_SwMatchInbound_" + lf[2]]) {
+                    let items = form["rule_SwMatchInbound_" + lf[2]].trim();
+                    items = items.replace(/\r\n/g, "  ");
+                    items = items.replace(/\n/g, "  ");
+                    items = items.split("  ");
+                    current.inboundTag = items;
+                }
+
+                if($('form#routing-config-form input#rule_SwMatchL7Proto_http_' + lf[2])[0].checked) { matchL7Proto.push("http"); }
+                if($('form#routing-config-form input#rule_SwMatchL7Proto_tls_' + lf[2])[0].checked) { matchL7Proto.push("tls"); }
+                if($('form#routing-config-form input#rule_SwMatchL7Proto_btor_' + lf[2])[0].checked) { matchL7Proto.push("bittorrent"); }
+                if(matchL7Proto.length != 0) { current.protocol = matchL7Proto; }
+
+                if($('form#routing-config-form input#rule_SwMatchProtoTCP_' + lf[2])[0].checked) { matchL4Proto.push("tcp"); }
+                if($('form#routing-config-form input#rule_SwMatchProtoUDP_' + lf[2])[0].checked) { matchL4Proto.push("udp"); }
+                if(matchL4Proto.length != 0) { current.network = matchL4Proto.join(','); }
+
+                let priority = parseInt(form["rule_priority_" + lf[2]]);
+                if(!isNaN(priority)) {
+                    if (priority <= currentPriority) {
+                        routingRules.unshift(current);
+                    } else {
+                        routingRules.push(current);
+                    }
+                    currentPriority = priority;
+                } else {
+                    routingRules.push(current);
+                }
+            }
+        }
+    }
+    return routingRules;
 }
