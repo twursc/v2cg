@@ -13,10 +13,19 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbound", "outbound", "routing", "transport", "policy"];
+    let pkeys = ["log", "inbound", "outbound", "transport", "policy"];
     for (var p = 0; p <= pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
+        }
+    }
+    if(typeof content["routing"] != "object") {
+        content["routing"] = {
+            "strategy": "rules",
+            "settings": {
+                "domainStrategy": "AsIs",
+                "rules": []
+            }
         }
     }
 

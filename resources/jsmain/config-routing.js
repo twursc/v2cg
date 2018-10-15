@@ -178,3 +178,11 @@ function _routingGetRules() {
     }
     return routingRules;
 }
+
+function _routingRulesCommit() {
+
+}
+
+function _routingDisplayRules() {
+
+}
