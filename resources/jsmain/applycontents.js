@@ -40,4 +40,5 @@ function _applyContents() {
     setTimeout("_policyDisplay()", 10);
     setTimeout("_dnsServersDisplay()", 10);
     setTimeout("_dnsBindingDisplay()", 10);
+    setTimeout("_routingDisplay()", 10);
 }

@@ -68,6 +68,7 @@ function _routingAddRule() {
         "    </div>\n" +
         "</td></tr>";
     $("table#routing-rules tbody").append(tmpl);
+    return count;
 }
 
 function _routingRemoveRule(obj) {
@@ -179,10 +180,50 @@ function _routingGetRules() {
     return routingRules;
 }
 
-function _routingRulesCommit() {
-
+function _routingCommit() {
+    content["routing"]["settings"]["domainStrategy"] = $('#routing_domainStrategy').val();
+    content["routing"]["settings"]["rules"] = _routingGetRules();
+    _globalCommit();
 }
 
-function _routingDisplayRules() {
-
+function _routingDisplay() {
+    $("table#routing-rules tbody").html("");
+    if(typeof content["routing"]["settings"]["domainStrategy"] === "string") {
+        $('#routing_domainStrategy').val(content["routing"]["settings"]["domainStrategy"]);
+    }
+    Object.keys(content["routing"]["settings"]["rules"]).forEach(function (rule) {
+        let row = _routingAddRule();
+        let theRule = content["routing"]["settings"]["rules"][rule];
+        console.log("Adding ", theRule);
+        $('form#routing-config-form input[name=\"rule_takeOutbound_' + row + '\"]').val(theRule["outboundTag"]);
+        if(typeof theRule["domain"] === "object") {
+            $('form#routing-config-form textarea[name=\"rule_SwMatchDomain_' + row + '\"]').val(theRule["domain"].join("  "));
+        }
+        if(typeof theRule["ip"] === "object") {
+            $('form#routing-config-form input[name=\"rule_SwMatchDestIP_' + row + '\"]').val(theRule["ip"].join("  "));
+        }
+        if(typeof theRule["port"] === "string") {
+            $('form#routing-config-form input[name=\"rule_SwMatchDestPort_' + row + '\"]').val(theRule["port"]);
+        }
+        if(typeof theRule["network"] === "string") {
+            let matchL4Proto = theRule["network"].split(',');
+            $('form#routing-config-form input#rule_SwMatchProtoTCP_' + row)[0].checked = (matchL4Proto.indexOf("tcp") !== -1);
+            $('form#routing-config-form input#rule_SwMatchProtoUDP_' + row)[0].checked = (matchL4Proto.indexOf("udp") !== -1);
+        }
+        if(typeof theRule["source"] === "object") {
+            $('form#routing-config-form input[name=\"rule_SwMatchSrcIP_' + row + '\"]').val(theRule["source"].join("  "));
+        }
+        if(typeof theRule["user"] === "object") {
+            $('form#routing-config-form input[name=\"rule_SwMatchSrcEmail_' + row + '\"]').val(theRule["source"].join("  "));
+        }
+        if(typeof theRule["inboundTag"] === "object") {
+            $('form#routing-config-form input[name=\"rule_SwMatchInbound_' + row + '\"]').val(theRule["inboundTag"].join("  "));
+        }
+        if(typeof theRule["protocol"] === "object") {
+            $('form#routing-config-form input#rule_SwMatchL7Proto_http_' + row)[0].checked = (theRule["protocol"].indexOf("http") !== -1);
+            $('form#routing-config-form input#rule_SwMatchL7Proto_tls_' + row)[0].checked = (theRule["protocol"].indexOf("tls") !== -1);
+            $('form#routing-config-form input#rule_SwMatchL7Proto_btor_' + row)[0].checked = (theRule["protocol"].indexOf("bittorrent") !== -1);
+        }
+    });
 }
+
