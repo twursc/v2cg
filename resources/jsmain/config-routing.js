@@ -5,27 +5,27 @@ function _routingAddRule() {
         "        <div class=\"row\">\n" +
         "            <label for=\"rule_priority_" + count + "\" class=\"col-sm-2 control-label \">" + i18N[using_language]["Priority"] + "</label>\n" +
         "            <div class=\"col-sm-3\">\n" +
-        "                <input type=\"number\" class=\"form-control\" name=\"rule_priority_" + count + "\" id=\"rule_priority_" + count + "\" placeholder=\"Priority\" value=\"" + count + "\">\n" +
+        "                <input type=\"number\" required class=\"form-control\" name=\"rule_priority_" + count + "\" id=\"rule_priority_" + count + "\" placeholder=\""+ i18N[using_language]["Priority"] +"\" value=\"" + count + "\">\n" +
         "            </div>\n" +
         "            <div class=\"col-sm-1\">&nbsp;</div>\n" +
         "            <label for=\"rule_takeOutbound_" + count + "\" class=\"col-sm-2 control-label\"><span>" + i18N[using_language]["Take Outbound"] + "</span></label>\n" +
         "            <div class=\"col-sm-4\">\n" +
-        "                <input type=\"text\" class=\"form-control\" name=\"rule_takeOutbound_" + count + "\" id=\"rule_takeOutbound_" + count + "\" placeholder=\"Take outbound\">\n" +
+        "                <input type=\"text\" required class=\"form-control\" name=\"rule_takeOutbound_" + count + "\" id=\"rule_takeOutbound_" + count + "\" placeholder=\""+ i18N[using_language]["Take outbound"] +"\">\n" +
         "            </div>\n" +
         "            <div class=\"col-sm-12\"><hr style=\"margin: 0 !important;\"></div>\n" +
         "        </div>\n" +
         "        <div class=\"row\">\n" +
         "            <label for=\"rule_SwMatchDestIP_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Destination"] + "</label>\n" +
         "            <div class=\"col-sm-4\">\n" +
-        "                <textarea class=\"form-control\" id=\"rule_SwMatchDestIP_" + count + "\" name=\"rule_SwMatchDestIP_" + count + "\" placeholder=\"Match Destination IP\"></textarea>\n" +
+        "                <textarea class=\"form-control\" required id=\"rule_SwMatchDestIP_" + count + "\" name=\"rule_SwMatchDestIP_" + count + "\" placeholder=\""+ i18N[using_language]["Destination IPs, split by return or double-space."] +"\"></textarea>\n" +
         "            </div>\n" +
         "            <label for=\"rule_SwMatchDomain_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Domain"] + "</label>\n" +
         "            <div class=\"col-sm-4\">\n" +
-        "                <textarea class=\"form-control\" id=\"rule_SwMatchDomain_" + count + "\" name=\"rule_SwMatchDomain_" + count + "\" placeholder=\"Match Domain Name\"></textarea>\n" +
+        "                <textarea class=\"form-control\" required id=\"rule_SwMatchDomain_" + count + "\" name=\"rule_SwMatchDomain_" + count + "\" placeholder=\""+ i18N[using_language]["Domain names, split by return or double-space."] + "\"></textarea>\n" +
         "            </div>\n" +
         "            <label for=\"rule_SwMatchDestPort_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Destination Port"] + "</label>\n" +
         "            <div class=\"col-sm-2\">\n" +
-        "                <input type=\"text\" class=\"form-control\" name=\"rule_SwMatchDestPort_" + count + "\" id=\"rule_SwMatchDestPort_" + count + "\" placeholder=\"Match Destination Port\">\n" +
+        "                <input type=\"text\" required class=\"form-control\" name=\"rule_SwMatchDestPort_" + count + "\" id=\"rule_SwMatchDestPort_" + count + "\" placeholder=\""+ i18N[using_language]["Port or port-range"] + "\">\n" +
         "            </div>\n" +
         "            <div class=\"col-sm-2\">&nbsp;</div>" +
         "            <label class=\"col-sm-2 control-label\">" + i18N[using_language]["Match IP Protocol"] + "</label>\n" +
@@ -39,15 +39,15 @@ function _routingAddRule() {
         "        <div class=\"row\">\n" +
         "            <label for=\"rule_SwMatchSrcIP_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Source"] + "</label>\n" +
         "            <div class=\"col-sm-10\">\n" +
-        "                <textarea class=\"form-control\" id=\"rule_SwMatchSrcIP_" + count + "\" name=\"rule_SwMatchSrcIP_" + count + "\" placeholder=\"Match Source IP\"></textarea>\n" +
+        "                <textarea class=\"form-control\" required id=\"rule_SwMatchSrcIP_" + count + "\" name=\"rule_SwMatchSrcIP_" + count + "\" placeholder=\""+ i18N[using_language]["Source IPs, split by return or double-space."] + "\"></textarea>\n" +
         "            </div>\n" +
         "            <label for=\"rule_SwMatchSrcEmail_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Email"] + "</label>\n" +
         "            <div class=\"col-sm-10\">\n" +
-        "                <textarea class=\"form-control\" id=\"rule_SwMatchSrcEmail_" + count + "\" name=\"rule_SwMatchSrcEmail_" + count + "\" placeholder=\"Match User Email\"></textarea>\n" +
+        "                <textarea class=\"form-control\" required id=\"rule_SwMatchSrcEmail_" + count + "\" name=\"rule_SwMatchSrcEmail_" + count + "\" placeholder=\""+ i18N[using_language]["Email addresses, split by return or double-space."] + "\"></textarea>\n" +
         "            </div>\n" +
         "            <label for=\"rule_SwMatchInbound_" + count + "\" class=\"col-sm-2 control-label\">" + i18N[using_language]["Match InboundTag"] + "</label>\n" +
         "            <div class=\"col-sm-10\">\n" +
-        "                <textarea class=\"form-control\" id=\"rule_SwMatchInbound_" + count + "\" name=\"rule_SwMatchInbound_" + count + "\" placeholder=\"Match InboundTag\"></textarea>\n" +
+        "                <textarea class=\"form-control\" required id=\"rule_SwMatchInbound_" + count + "\" name=\"rule_SwMatchInbound_" + count + "\" placeholder=\""+ i18N[using_language]["Inbound Tags, split by return or double-space."] + "\"></textarea>\n" +
         "            </div>\n" +
         "            <label class=\"col-sm-2 control-label\">" + i18N[using_language]["Match Application"] + "</label>\n" +
         "            <div class=\"col-sm-8\">\n" +
@@ -226,4 +226,3 @@ function _routingDisplay() {
         }
     });
 }
-

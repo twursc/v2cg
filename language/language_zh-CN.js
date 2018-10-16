@@ -123,5 +123,16 @@ i18N["zh-CN"] = {
     "Match Email": "匹配用户 Email",
     "Match InboundTag": "匹配传入连接",
     "Match Application": "匹配应用层协议",
-    "Add Rule": "添加规则"
+    "Add Rule": "添加规则",
+
+    "Priority": "优先级",
+    "Take outbound": "选择传出连接",
+    "Destination IPs, split by return or double-space.": "需要匹配到此路由的目的地址",
+    "Domain names, split by return or double-space.": "需要匹配到此路由的域名",
+    "Port or port-range": "端口或端口范围",
+    "Source IPs, split by return or double-space.": "需要匹配到此路由的来源地址",
+    "Email addresses, split by return or double-space.": "需要匹配到此路由的用户 Email",
+    "Inbound Tags, split by return or double-space.": "需要匹配到此路由的传入连接",
+
+
 };

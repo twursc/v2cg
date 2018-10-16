@@ -87,6 +87,10 @@
 
 }
 
+form#routing-config-form input,         form#routing-config-form textarea          { transition: 0.25s; }
+form#routing-config-form input:hover,   form#routing-config-form textarea:hover    { opacity: 1 !important; }
+form#routing-config-form input:focus,   form#routing-config-form textarea:focus    { opacity: 1 !important; }
+form#routing-config-form input:invalid, form#routing-config-form textarea:invalid  { opacity: 0.5; }
 
 /* Theme Dark */
 html.theme-dark body {

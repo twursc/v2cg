@@ -13,7 +13,7 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbound", "outbound", "transport", "policy"];
+    let pkeys = ["log", "dns", "inbound", "outbound", "transport", "policy"];
     for (var p = 0; p <= pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
@@ -127,6 +127,7 @@ function _serializeForm(obj) {
 }
 
 function onContentModified() {
+    delete content["undefined"];
     let defaultInbound = _getDetourIndex(content["inboundDetour"], "default");
     delete content["inboundDetour"][defaultInbound].default;
     if(defaultInbound == -1) {
