@@ -200,7 +200,7 @@ function _routingDisplay() {
             $('form#routing-config-form textarea[name=\"rule_SwMatchDomain_' + row + '\"]').val(theRule["domain"].join("  "));
         }
         if(typeof theRule["ip"] === "object") {
-            $('form#routing-config-form input[name=\"rule_SwMatchDestIP_' + row + '\"]').val(theRule["ip"].join("  "));
+            $('form#routing-config-form textarea[name=\"rule_SwMatchDestIP_' + row + '\"]').val(theRule["ip"].join("  "));
         }
         if(typeof theRule["port"] === "string") {
             $('form#routing-config-form input[name=\"rule_SwMatchDestPort_' + row + '\"]').val(theRule["port"]);
@@ -211,13 +211,13 @@ function _routingDisplay() {
             $('form#routing-config-form input#rule_SwMatchProtoUDP_' + row)[0].checked = (matchL4Proto.indexOf("udp") !== -1);
         }
         if(typeof theRule["source"] === "object") {
-            $('form#routing-config-form input[name=\"rule_SwMatchSrcIP_' + row + '\"]').val(theRule["source"].join("  "));
+            $('form#routing-config-form textarea[name=\"rule_SwMatchSrcIP_' + row + '\"]').val(theRule["source"].join("  "));
         }
         if(typeof theRule["user"] === "object") {
-            $('form#routing-config-form input[name=\"rule_SwMatchSrcEmail_' + row + '\"]').val(theRule["source"].join("  "));
+            $('form#routing-config-form textarea[name=\"rule_SwMatchSrcEmail_' + row + '\"]').val(theRule["source"].join("  "));
         }
         if(typeof theRule["inboundTag"] === "object") {
-            $('form#routing-config-form input[name=\"rule_SwMatchInbound_' + row + '\"]').val(theRule["inboundTag"].join("  "));
+            $('form#routing-config-form textarea[name=\"rule_SwMatchInbound_' + row + '\"]').val(theRule["inboundTag"].join("  "));
         }
         if(typeof theRule["protocol"] === "object") {
             $('form#routing-config-form input#rule_SwMatchL7Proto_http_' + row)[0].checked = (theRule["protocol"].indexOf("http") !== -1);
