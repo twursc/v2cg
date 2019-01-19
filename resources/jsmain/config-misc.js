@@ -50,7 +50,7 @@ function _apiCommit() {
     };
 
     if($("input#enable_flowstats")[0].checked) {
-        content["stats"] = [];
+        content["stats"] = {};
     } else {
         delete content["stats"];
     }

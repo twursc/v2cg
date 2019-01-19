@@ -119,7 +119,7 @@
                                                         <option value="http">HTTP/2</option>
                                                         <option value="domainsocket">Domain Socket</option>
                                                     </select>-->
-                                                    <textarea id="inbound-transport" class="form-control"></textarea>
+                                                    <textarea id="inbound-transport" class="form-control" style="font-family: Consolas;"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -214,7 +214,7 @@
                                                         <option value="http">HTTP/2</option>
                                                         <option value="domainsocket">Domain Socket</option>
                                                     </select>-->
-                                                    <textarea id="outbound-transport" class="form-control"></textarea>
+                                                    <textarea id="outbound-transport" class="form-control" style="font-family: Consolas;"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -405,10 +405,16 @@
                 <h3>JSON Content</h3>
                 <p class="panedesc" style="margin-bottom: 8px;">Contents below are according to your configurations before, it can be used directly by V2Ray by pasting it into <code>config.json</code></p>
                 <p class="panedesc">These contents are only stored in current browser's <code>window.localStorage</code> under domain <code id="domainName">undefined</code></p>
-                <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content', this.value)">{}</textarea>
+                <textarea class="jsonContent form-control" style="height: 540px; min-width: 100%; max-width: 100%; font-family: Consolas" onchange="jsonStorage.setItem('nz.v2cg.storage.content.'+slotactive, this.value)">{}</textarea>
                 <br><button class="btn btn-primary" onclick="_parseJson($('textarea.jsonContent').val());">解析当前 JSON</button>
                 &nbsp;<button class="btn btn-default" onclick="_copyJsonContent();">&nbsp; 复制 &nbsp;</button>
                 &nbsp;<button class="btn btn-default" onclick="_jsonFormat(); this.blur();">Reformat JSON</button>
+                <div class="slots" style="float: right; text-align: right;">
+                    <select id="slot-selector" class="form-control" style="width: 320px; display: inline;"></select>
+                    &nbsp; <button class="btn btn-default" style="margin-top: -2px;" onclick="_nameSlot($('#slot-selector').val())">Rename</button>
+                    &nbsp; <button class="btn btn-default" style="margin-top: -2px;" onclick="_loadSlot($('#slot-selector').val())">Load slot</button>
+                    &nbsp; <button class="btn btn-default" style="margin-top: -2px;" onclick="_propagate($('#slot-selector').val())">Propagate</button>
+                </div>
             </div>
         </div>
     </div>
@@ -426,6 +432,8 @@
 <script src="./resources/bootstrap/js/bootstrap.min.js"></script>
 <script src="./language/i18N_Loader.js"></script>
 <script src="./language/language_zh-CN.js"></script>
+<script src="./resources/jsmain/slotmgr.js"></script>
+<script src="./resources/jsmain/propagator.js"></script>
 <script src="./resources/jsmain/base.js"></script>
 <script src="./resources/jsmain/applycontents.js"></script>
 <script src="./resources/jsmain/pageload.js"></script>
@@ -438,9 +446,9 @@
     content = [];
     clientLang = $('html').attr('lang');
     jsonStorage = window.localStorage;
-    $('textarea.jsonContent').val(jsonStorage.getItem("nz.v2cg.storage.content"));
     window.onload = function () {
         //_applyI18N();
+        _listSlots(); _loadSlot();
         _parseJson($('textarea.jsonContent').val());
         _parsePageUI();
     };

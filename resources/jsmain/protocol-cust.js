@@ -174,8 +174,8 @@ function _protoDetailsParse(page, protoname, form) {
                 let retval = {
                     "clients": _vmessGetUsers(form),
                     "default": {
-                        "level": form["vmess_default_level"],
-                        "alterId": form["vmess_default_alterid"]
+                        "level": parseInt(form["vmess_default_level"]),
+                        "alterId": parseInt(form["vmess_default_alterid"])
                     },
                     "disableInsecureEncryption": $("div#" + page + "-config #vmess_disableInsecureEncryption")[0].checked
                 };

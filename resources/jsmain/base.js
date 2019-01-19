@@ -15,19 +15,20 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbounds", "outbounds", "transport", "dns", "routing", "policy"];
+    let pkeys = ["inbounds", "outbounds", "log", "transport", "dns", "policy"];
     for (let p = 0; p < pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
-            content[pkeys[p]] = {};
+            if(p >= 2) {
+                content[pkeys[p]] = {};
+            } else {
+                content[pkeys[p]] = [];
+            }
         }
     }
     if(typeof content["routing"] != "object") {
         content["routing"] = {
-            "strategy": "rules",
-            "settings": {
-                "domainStrategy": "AsIs",
-                "rules": []
-            }
+            "domainStrategy": "AsIs",
+            "rules": []
         }
     }
 
