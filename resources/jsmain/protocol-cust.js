@@ -51,7 +51,7 @@ function _protoDetailsDisplay(page, protoname, details) {
                     $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authuser_" + newrow + "]").val(info["user"]);
                     $(".protodetails table#socksauth_users tbody tr.socks_authuser_item input[name=socks_authpass_" + newrow + "]").val(info["pass"]);
                 });
-                $('div#' + page + '-config .protodetails #socks_timeout').val(parseInt(details["timeout"]));
+                //$('div#' + page + '-config .protodetails #socks_timeout').val(parseInt(details["timeout"]));
                 $('div#' + page + '-config .protodetails #socks_userlevel').val(parseInt(details["userLevel"]));
                 $('div#' + page + '-config .protodetails #socks_udpforwarding')[0].checked = details["udp"];
                 $('div#' + page + '-config .protodetails #socks_localaddr').val(details["ip"]);
@@ -217,7 +217,7 @@ function _protoDetailsParse(page, protoname, form) {
                 return {
                     "auth": authtype,
                     "accounts": socksAccounts,
-                    "timeout": parseInt(form["socks_timeout"]),
+                    //"timeout": parseInt(form["socks_timeout"]),
                     "udp": $("div#" + page + "-config #socks_udpforwarding")[0].checked,
                     "ip": form["socks_localaddr"],
                     "userLevel": parseInt(form["socks_userlevel"])
