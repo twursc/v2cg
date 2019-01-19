@@ -1,4 +1,6 @@
 
+jsonMode = "v4";
+
 function _parseJson(jsoncontent) {
 
     if (jsoncontent.length == 0) {
@@ -13,8 +15,8 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbound", "outbound", "transport", "policy"];
-    for (var p = 0; p <= pkeys.length; p++) {
+    let pkeys = ["log", "inbounds", "outbounds", "transport", "policy"];
+    for (let p = 0; p <= pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
         }
@@ -29,40 +31,17 @@ function _parseJson(jsoncontent) {
         }
     }
 
-    if (typeof content["inbound"] != "undefined") {
-        if (typeof content["inbound"].tag == "undefined") {
-            content["inbound"].tag = "default";
-        } else {
-            content["inbound"].default = true;
-        }
-        if (typeof content["inboundDetour"] == "undefined") {
-            content["inboundDetour"] = [content["inbound"]];
-        } else {
-            let detourIndex = parseInt(_getDetourIndex(content["inboundDetour"], "default"));
-            if (detourIndex == -1) {
-                content["inboundDetour"].unshift(content["inbound"]);
-            } else {
-                content["inboundDetour"][detourIndex] = content["inbound"];
-            }
+    if(typeof content["inbounds"][0] != "undefined") {
+        if(typeof content["inbounds"][0]["tag"] != "string") {
+            content["inbounds"][0]["tag"] = "default";
         }
     }
-    if (typeof content["outbound"] != "undefined") {
-        if (typeof content["outbound"].tag == "undefined") {
-            content["outbound"].tag = "default";
-        } else {
-            content["outbound"].default = true;
-        }
-        if (typeof content["outboundDetour"] == "undefined") {
-            content["outboundDetour"] = [content["outbound"]];
-        } else {
-            let detourIndex = parseInt(_getDetourIndex(content["outboundDetour"], "default"));
-            if (detourIndex == -1) {
-                content["outboundDetour"].unshift(content["outbound"]);
-            } else {
-                content["outboundDetour"][detourIndex] = content["outbound"];
-            }
+    if(typeof content["outbounds"][0] != "undefined") {
+        if(typeof content["outbounds"][0]["tag"] != "string") {
+            content["outbounds"][0]["tag"] = "default";
         }
     }
+
     _applyContents();
 }
 
@@ -127,7 +106,7 @@ function _serializeForm(obj) {
 }
 
 function onContentModified() {
-    let defaultInbound = _getDetourIndex(content["inboundDetour"], "default");
+    /*let defaultInbound = _getDetourIndex(content["inboundDetour"], "default");
     delete content["inboundDetour"][defaultInbound].default;
     if(defaultInbound == -1) {
         if(typeof content["inboundDetour"][0] != "undefined") {
@@ -147,7 +126,7 @@ function onContentModified() {
     } else {
         content["outbound"] = content["outboundDetour"][defaultOutbound];
         content["outboundDetour"].splice(defaultOutbound, 1);
-    }
+    }*/
 
     $('textarea.jsonContent').val(JSON.stringify(content, null, 2)).change();
     alert(i18N[using_language]["Configuration updated."]);
@@ -170,16 +149,16 @@ function _getDetourIndex(detours, tagname) {
 
 function _removeDetour(page, tagname) {
     Object.keys(content[page+"Detour"]).forEach(function (k) {
-        if (content[page+"Detour"][k].tag == tagname) {
-            console.log("Remove " + page + "Detour: [" + k + "]" + tagname);
-            content[page+"Detour"].splice(k, 1);
+        if (content[page+"s"][k].tag == tagname) {
+            console.log("Remove " + page + ": [" + k + "]" + tagname);
+            content[page+"s"].splice(k, 1);
             onContentModified();
         }
     });
 }
 
 function _setDefaultDetour(page, tagname) {
-    let renameDefault = prompt(i18N[using_language]["Reset the tag of original default detour to: "]);
+    /*let renameDefault = prompt(i18N[using_language]["Reset the tag of original default detour to: "]);
     if (renameDefault != null) {
         if (renameDefault.trim().length != 0) {
             let defaultDetour = _getDetourIndex(content[page + "Detour"], "default");
@@ -191,5 +170,9 @@ function _setDefaultDetour(page, tagname) {
         } else {
             alert(i18N[using_language]["Invalid tag supplied."]);
         }
-    }
+    }*/
+    let detourIndex = _getDetourIndex(content[page], tagname);
+    let detourInfo = content[page][detourIndex];
+    content[page].splice(detourIndex, 1);
+    content[page].unshift(detourInfo);
 }

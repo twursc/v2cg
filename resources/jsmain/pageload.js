@@ -2,8 +2,8 @@
 
 function _showconn(page, tagname) {
 
-    Object.keys(content[page + "Detour"]).forEach(function (v) {
-        v = content[page + "Detour"][v];
+    Object.keys(content[page + "s"]).forEach(function (v) {
+        v = content[page + "s"][v];
         if (v.tag == tagname) {
             if(page == "inbound") {
                 if (typeof v['listen'] == "undefined") {
@@ -46,8 +46,8 @@ function _showproto(page, protoname, tagname) {
         console.log('div.proto_tmpl_container > .proto_tmpl_' + page + '#' + page.substr(0,1) + "-" + protoname);
         if (tmpl.length == 1) {
             container.html(tmpl.html());
-            Object.keys(content[page+"Detour"]).forEach(function(v) {
-                v = content[page+"Detour"][v];
+            Object.keys(content[page+"s"]).forEach(function(v) {
+                v = content[page+"s"][v];
                 //console.log(v);
                 if(v.tag == tagname && v.protocol == protoname) {
                     if(typeof v.settings != "undefined") {

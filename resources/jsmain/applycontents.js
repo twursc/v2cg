@@ -2,8 +2,8 @@ function _applyContents() {
 
     // Fill inbound list
     $('div#inbounds-list .conn-table-container table > tbody').html("");
-    Object.keys(content["inboundDetour"]).forEach(function(k) {
-        let theInbound = content["inboundDetour"][k];
+    Object.keys(content["inbounds"]).forEach(function(k) {
+        let theInbound = content["inbounds"][k];
         let tmpl = "\n" +
             "<tr class=\"inbound-obj\" data-inbound-tag=\"" + theInbound["tag"] + "\" data-inbound-primary=\"\" " +
             "   onclick=\"_showconn('inbound', '" + theInbound["tag"] + "')\">\n" +
@@ -19,8 +19,8 @@ function _applyContents() {
 
     // Fill outbound list
     $('div#outbounds-list .conn-table-container table > tbody').html("");
-    Object.keys(content["outboundDetour"]).forEach(function(k) {
-        let theOutbound = content["outboundDetour"][k];
+    Object.keys(content["outbounds"]).forEach(function(k) {
+        let theOutbound = content["outbounds"][k];
         let tmpl = "\n" +
             "<tr class=\"outbound-obj\" data-oOutbound-tag=\"" + theOutbound["tag"] + "\" data-outbound-primary=\"\" " +
             "   onclick=\"_showconn('outbound', '" + theOutbound["tag"] + "')\">\n" +

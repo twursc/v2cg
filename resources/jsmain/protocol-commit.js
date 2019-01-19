@@ -13,8 +13,8 @@ function _protoDetailsCommit(page) {
     let sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
     let protodetails_form = $('form').serializeArray();
 
-    Object.keys(content[page + "Detour"]).forEach(function (v) {
-        if (content[page + "Detour"][v].tag == tagname) {
+    Object.keys(content[page + "s"]).forEach(function (v) {
+        if (content[page + "s"][v].tag == tagname) {
             detourIndex = v
         }
     });
@@ -69,14 +69,14 @@ function _protoDetailsCommit(page) {
         console.log("Saving "+page+" (tag: '"+tagname+"')", detourDetails);
 
         if (detourIndex == -1) {
-            content[page + "Detour"].push(detourDetails)
+            content[page + "s"].push(detourDetails)
         } else {
             //fixme: remove the following determination while per-detour transport config finished.
-            if(typeof content[page + "Detour"][detourIndex]["streamSettings"] == "object") {
-                console.warn("Recovering streamSettings from " + detourIndex, content[page+"Detour"][detourIndex]);
-                detourDetails["streamSettings"] = content[page + "Detour"][detourIndex]["streamSettings"];
+            if(typeof content[page + "s"][detourIndex]["streamSettings"] == "object") {
+                console.warn("Recovering streamSettings from " + detourIndex, content[page+"s"][detourIndex]);
+                detourDetails["streamSettings"] = content[page + "s"][detourIndex]["streamSettings"];
             }
-            content[page + "Detour"][detourIndex] = detourDetails;
+            content[page + "s"][detourIndex] = detourDetails;
         }
 
         _globalCommit();
