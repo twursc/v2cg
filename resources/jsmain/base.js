@@ -15,8 +15,8 @@ function _parseJson(jsoncontent) {
     }
 
 
-    let pkeys = ["log", "inbounds", "outbounds", "transport", "policy"];
-    for (let p = 0; p <= pkeys.length; p++) {
+    let pkeys = ["log", "inbounds", "outbounds", "transport", "dns", "routing", "policy"];
+    for (let p = 0; p < pkeys.length; p++) {
         if (typeof content[pkeys[p]] != "object") {
             content[pkeys[p]] = {};
         }
@@ -148,7 +148,7 @@ function _getDetourIndex(detours, tagname) {
 }
 
 function _removeDetour(page, tagname) {
-    Object.keys(content[page+"Detour"]).forEach(function (k) {
+    Object.keys(content[page+"s"]).forEach(function (k) {
         if (content[page+"s"][k].tag == tagname) {
             console.log("Remove " + page + ": [" + k + "]" + tagname);
             content[page+"s"].splice(k, 1);
@@ -171,7 +171,7 @@ function _setDefaultDetour(page, tagname) {
             alert(i18N[using_language]["Invalid tag supplied."]);
         }
     }*/
-    let detourIndex = _getDetourIndex(content[page], tagname);
+    let detourIndex = _getDetourIndex(content[page]+"s", tagname);
     let detourInfo = content[page][detourIndex];
     content[page].splice(detourIndex, 1);
     content[page].unshift(detourInfo);
