@@ -9,6 +9,7 @@ function _protoDetailsCommit(page) {
     let outboundProxy = $('div#' + page + '-config #'+page+'-outboundProxy').val();
     let muxConcurrency = $('div#' + page + '-config #'+page+'-mux').val();
     let protoname = $('div#' + page + '-config #'+page+'-protocol').val();
+    let streamSettings = $('div#' + page + '-config #'+page+'-transport').val();
     let protodetails = {};
     let sniffingEnabled = false; //TODO: inbound/outbound Sniffing support
     let protodetails_form = $('form').serializeArray();
@@ -23,6 +24,14 @@ function _protoDetailsCommit(page) {
         protodetails[protodetails_form[v].name] = protodetails_form[v].value;
     });
 
+    try {
+        streamSettings = JSON.parse(streamSettings)
+    } catch(err) {
+        alert("StreamSettings field encountered error, falling back to original. \n " + err.description);
+        console.warn("Recovering streamSettings from " + detourIndex, content[page+"s"][detourIndex]);
+        streamSettings = content[page + "s"][detourIndex]["streamSettings"];
+    }
+
     setTimeout(function () {
         protodetails = _protoDetailsParse(page, protoname, protodetails);
 
@@ -33,10 +42,13 @@ function _protoDetailsCommit(page) {
                 "port": parseInt(listenPort), //TODO: Port-range and multiport support
                 "protocol": protoname,
                 "settings": protodetails,
-                "streamSettings": {},
+                "streamSettings": streamSettings,
                 "sniffing": {
                     "enabled": false,
                     "destOverride": []
+                },
+                "allocate": {
+                    "strategy": "always"
                 }
             };
         }
@@ -44,7 +56,7 @@ function _protoDetailsCommit(page) {
             detourDetails = {
                 "tag": tagname,
                 "protocol": protoname,
-                "streamSettings": {},
+                "streamSettings": streamSettings,
                 "settings": protodetails,
                 "mux": { "enabled": false }
             };
@@ -72,10 +84,10 @@ function _protoDetailsCommit(page) {
             content[page + "s"].push(detourDetails)
         } else {
             //fixme: remove the following determination while per-detour transport config finished.
-            if(typeof content[page + "s"][detourIndex]["streamSettings"] == "object") {
+            /*if(typeof content[page + "s"][detourIndex]["streamSettings"] == "object") {
                 console.warn("Recovering streamSettings from " + detourIndex, content[page+"s"][detourIndex]);
                 detourDetails["streamSettings"] = content[page + "s"][detourIndex]["streamSettings"];
-            }
+            }*/
             content[page + "s"][detourIndex] = detourDetails;
         }
 

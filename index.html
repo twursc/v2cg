@@ -109,17 +109,17 @@
                                     <div class="panel panel-default">
                                         <div class="panel-heading">Transport Settings</div>
                                         <div class="panel-body transport" data-currentproto="">
-
-                                            <div class="form-group" style="padding: 0 16px;">
-                                                <label for="inbound-transport" class="col-sm-2 control-label">Protocol</label>
+                                            <div class="form-group">
+                                                <label for="inbound-transport" class="col-sm-2 control-label">Configuration</label>
                                                 <div class="col-sm-10">
-                                                    <select class="form-control" id="inbound-transport" onchange="_showtransport('inbound', this.value, $('input#inboundTag').val())">
+                                                    <!--<select class="form-control" id="inbound-transport" onchange="_showtransport('inbound', this.value, $('input#inboundTag').val())">
                                                         <option value="tcp">TCP</option>
                                                         <option value="kcp">mKCP</option>
                                                         <option value="ws">WebSocket</option>
                                                         <option value="http">HTTP/2</option>
                                                         <option value="domainsocket">Domain Socket</option>
-                                                    </select>
+                                                    </select>-->
+                                                    <textarea id="inbound-transport" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -202,6 +202,19 @@
                                                 <div class="col-sm-10">
                                                     <input type="number" class="form-control" id="outbound-mux" value="0">
                                                     <span><font style="color: red">*</font> <span>Mux concurrency (1-1024, default=8), Set to 0 to disable mux.</span></span>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="outbound-transport" class="col-sm-2 control-label">Configuration</label>
+                                                <div class="col-sm-10">
+                                                    <!--<select class="form-control" id="inbound-transport" onchange="_showtransport('inbound', this.value, $('input#inboundTag').val())">
+                                                        <option value="tcp">TCP</option>
+                                                        <option value="kcp">mKCP</option>
+                                                        <option value="ws">WebSocket</option>
+                                                        <option value="http">HTTP/2</option>
+                                                        <option value="domainsocket">Domain Socket</option>
+                                                    </select>-->
+                                                    <textarea id="outbound-transport" class="form-control"></textarea>
                                                 </div>
                                             </div>
                                         </div>

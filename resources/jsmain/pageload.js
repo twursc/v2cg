@@ -14,12 +14,14 @@ function _showconn(page, tagname) {
                 $('div#' + page + '-config #' + page + '-listenAddr').val(v['listen']);
                 $('div#' + page + '-config #' + page + '-listenPort').val(v['port']);
                 $('div#' + page + '-config #' + page + '-protocol').val("null").val(v['protocol']).change();
-            }
+                $('div#' + page + '-config #' + page + '-transport').val(JSON.stringify(v['streamSettings']));
+        }
             if(page == "outbound") {
                 $('div#' + page + '-config').attr("data-" + page + "tag", tagname);
                 $('div#' + page + '-config #' + page + 'Tag').val(tagname).change();
                 $('div#' + page + '-config #' + page + '-sendThrough').val(v['sendThrough']);
                 $('div#' + page + '-config #' + page + '-protocol').val("null").val(v['protocol']).change();
+                $('div#' + page + '-config #' + page + '-transport').val(JSON.stringify(v['streamSettings']));
                 if(typeof v['mux'] == "object") {
                     if(v['mux']['enabled'] == true) {
                         if(typeof v['mux']['concurrency'] == "number") {
@@ -65,6 +67,7 @@ function _showproto(page, protoname, tagname) {
 
 function _showtransport(page, transport, tagname) {
     //TODO: Show transport
+
 }
 
 function _formReset(page) {
