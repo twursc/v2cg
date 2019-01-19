@@ -39,8 +39,8 @@ function _vmessGetUsers(form) {
                     vmessClients.push({
                         "email": vEmail,
                         "id": formVal,
-                        "level": vLevel,
-                        "alterId": vAlterID
+                        "level": parseInt(vLevel),
+                        "alterId": parseInt(vAlterID)
                     });
                 }
             }
@@ -123,7 +123,7 @@ function _vmessParseVNext(form) {
                         "port": parseInt(vPort),
                         "users": [{
                             "id": vUUID,
-                            "alterId": vAlter,
+                            "alterId": parseInt(vAlter),
                             "security": "auto",
                             "level": parseInt(vLevel)
                         }]
